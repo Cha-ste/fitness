@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    h3, .text-box{
+        text-align: center;
+    }
+
+    .login-content{
+        text-align: center;
+    }
+
+    .submit-btn {
+        padding: 10px 30px;
+        background-color: #008cff;
+    }
+
+    .form-box {
+        border: solid 1px #eee;
+        width: 50%;
+        padding: 20px;
+        margin: auto;
+        line-height: 5;
+    }
+
+    .input-box {
+        line-height: 3;
+    }
+</style>
+<body>
+    <div class="login-content">
+        <div class="form-box">
+            <h3>鬼谷子学习院</h3>
+            <div class="text-box">
+                <label>账号：</label><input type="text" id="mobile" class="input-box">
+            </div>
+            <div class="text-box">
+                <label>密码：</label><input type="password" id="password" class="input-box">
+            </div>
+            <button class="submit-btn" onclick="login()">登录</button>
+        </div>
+    </div>
+</body>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+    $(function () {
+
+    });
+
+    function login() {
+        var mobile = $("#mobile").val();
+        var password = $("#password").val();
+        $.ajax({
+            type: "GET",
+            url: 'http://localhost:8080/login',
+            data: {
+                'mobile': mobile,
+                'password': password
+            },
+            dataType: "json",
+            success: function (res) {
+                if (res.code == 500101) {
+                    alert(res.msg)
+                }
+                console.log(res)
+            },
+            error: function(res) {
+                console.log(res)
+            }
+        })
+
+    }
+</script>
+</html>
