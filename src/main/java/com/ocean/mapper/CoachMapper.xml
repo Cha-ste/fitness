@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocean.mapper.CoachMapper">
+  <resultMap id="BaseResultMap" type="com.ocean.entity.Coach">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="coach_name" jdbcType="VARCHAR" property="coachName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from coach
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ocean.entity.Coach">
+    insert into coach (coach_name, password,
+      sex, phone, birthday)
+    values (#{coachName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ocean.entity.Coach">
+    update coach
+    set coach_name = #{coachName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <select id="getCoach" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select tid, coach_name, sex, phone, birthday, password
+    from coach
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select tid, coach_name, password, sex, phone, birthday
+    from coach
+  </select>
+
+  <select id="query" parameterType="string" resultMap="BaseResultMap">
+    select tid, coach_name, sex, phone, birthday from coach
+    <if test="coachName != null and coachName != ''">
+      where coach_name like concat('%', #{coachName}, '%')
+    </if>
+  </select>
+
+  <select id="getTraineeList" resultType="com.ocean.entity.User">
+    select
+      u.sid,
+      u.username,
+      u.phone,
+      u.sex,
+      u.birthday
+    from
+      users u,
+      apply a
+    where a.tid = #{tid}
+      and a.cid = #{cid}
+      and u.sid = a.sid
+  </select>
+
+  <update id="changePassword">
+    update coach set password = #{newPassword} where tid = #{tid}
+  </update>
+</mapper>

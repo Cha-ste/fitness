@@ -2,16 +2,10 @@ package com.ocean.interceptor;
 
 
 import com.alibaba.fastjson.JSON;
-import com.ocean.redis.RedisService;
-import com.ocean.redis.UserPrefix;
-import com.ocean.utils.Constants;
-import com.ocean.utils.TokenUtils;
 import com.ocean.vo.CodeMsg;
 import com.ocean.vo.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,12 +18,9 @@ import java.io.PrintWriter;
 public class LoginInterceptor implements HandlerInterceptor {
     private Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
-    @Autowired
-    private RedisService redisService;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getParameter("token");
+        String token = request.getHeader("token");
         //如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
@@ -39,14 +30,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             printJson(response, CodeMsg.NO_LOGIN);
             return false;
         }
-
-        if (!validToken(token)) {
-            printJson(response, CodeMsg.TOKEN_EXPIRED);
-            return false;
-        }
-
-        //延迟token过期时间
-        delayExpired(token);
 
         return true;
     }
@@ -84,16 +67,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private Boolean validToken(String token) {
-        String userId = redisService.get(UserPrefix.getByToken, token, String.class);
-        return !StringUtils.isEmpty(userId);
-    }
-
-    private void delayExpired(String token) {
-        String userId = redisService.get(UserPrefix.getByToken, token, String.class);
-        redisService.set(UserPrefix.getByToken, token, userId, Constants.TOKEN_EXPIRED_SECOND);
     }
 
 }

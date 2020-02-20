@@ -1,25 +1,29 @@
 package com.ocean.service;
 
-import java.util.HashMap;
-import java.util.List;
-import com.ocean.entity.User;
 import com.github.pagehelper.PageInfo;
+import com.ocean.entity.User;
+
+import java.util.HashMap;
 
 
 public interface UserService {
 
-    User getUser(String id);
+    User getUser(Integer id);
 
     void save(User model);
 
     void update(User model);
 
-    void del(String id);
+    void del(Integer id);
 
     int getCount();
 
-    PageInfo<User> query(int currentPage, int itemsPerPage, HashMap<String, Object> paramMap);
+    PageInfo<User> query(int currentPage, int itemsPerPage, String username);
     int queryCount(HashMap<String, Object> paramMap);
 
-    User getUserByMobile(String mobile);
+    public boolean usernameExist(String username);
+
+    User getUserForLogin(User user);
+
+    void changePassword(Integer sid, String newPassword);
 }

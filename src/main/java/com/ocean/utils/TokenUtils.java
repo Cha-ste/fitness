@@ -2,16 +2,9 @@ package com.ocean.utils;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.ocean.redis.RedisService;
-import com.ocean.redis.UserPrefix;
 import net.minidev.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -23,9 +16,6 @@ public class TokenUtils {
     private static final String  VALID = "valid";
     private static final String  EXPIRED = "expired";
     private static final String  INVALID = "invalid";
-
-    @Autowired
-    private static RedisService redisService;
 
     private static final JWSHeader header=new JWSHeader(JWSAlgorithm.HS256, JOSEObjectType.JWT, null, null, null, null, null, null, null, null, null, null, null);
 
@@ -55,14 +45,6 @@ public class TokenUtils {
 //
 //    }
 
-
-    /**
-     * 验证token
-     */
-    public static Boolean validToken(String token) {
-        String value = redisService.get(UserPrefix.getByToken, token, String.class);
-        return StringUtils.isEmpty(value);
-    }
 
     /**
      * 校验token是否合法

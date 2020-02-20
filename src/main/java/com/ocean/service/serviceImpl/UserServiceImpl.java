@@ -1,16 +1,17 @@
 package com.ocean.service.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.ocean.entity.User;
+import com.ocean.mapper.UserMapper;
+import com.ocean.service.UserService;
+import com.ocean.utils.MD5Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
 
-import com.ocean.entity.User;
-import com.ocean.service.UserService;
-import com.ocean.mapper.primary.UserMapper;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import java.util.HashMap;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -21,9 +22,9 @@ public class UserServiceImpl implements UserService{
     private UserMapper mapper;
 
     @Override
-    public User getUser(String id) {
+    public User getUser(Integer id) {
 
-        User model = mapper.selectByPrimaryKey(Integer.valueOf(id));
+        User model = mapper.getUser(id);
         if (model == null) {
             logger.error("[getUser]delete User id={} fail", id);
             throw new RuntimeException("GET data fail");
@@ -34,7 +35,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void save(User model) {
-        int success = mapper.insertSelective(model);
+        model.setPassword(MD5Util.inputPass2FormPass(model.getPassword()));
+        int success = mapper.insert(model);
         if (success <= 0) {
             logger.error("[addUser]add User={} fail",  model.toString());
             throw new RuntimeException("Add data fail");
@@ -55,11 +57,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void del(String id) {
+    public void del(Integer sid) {
 
-        int success = mapper.deleteByPrimaryKey(id);
+        int success = mapper.deleteByPrimaryKey(sid);
         if (success <= 0) {
-            logger.error("[deleteUser]delete User id={} fail", id);
+            logger.error("[deleteUser]delete User id={} fail", sid);
             throw new RuntimeException("Del data fail");
         }
         return;
@@ -67,10 +69,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public PageInfo<User> query(int pageNum, int pageSize, HashMap<String, Object> paramMap) {
+    public PageInfo<User> query(int pageNum, int pageSize, String username) {
         PageHelper.startPage(pageNum, pageSize);
 
-        return new PageInfo<>(mapper.query(paramMap));
+        return new PageInfo<>(mapper.query(username));
     }
 
     @Override
@@ -84,7 +86,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUserByMobile(String mobile) {
-        return mapper.getUserByMobile(mobile);
+    public boolean usernameExist(String username) {
+        User member = mapper.getByUsername(username);
+        return member != null;
+    }
+
+    @Override
+    public User getUserForLogin(User user) {
+        return mapper.getUserForLogin(user.getUsername(),
+                MD5Util.inputPass2FormPass(user.getPassword()));
+    }
+
+    @Override
+    public void changePassword(Integer sid, String newPassword) {
+        mapper.changePassword(sid, MD5Util.inputPass2FormPass(newPassword));
     }
 }

@@ -1,8 +1,10 @@
 package com.ocean.config;
 
+import com.ocean.converter.DateConverter;
 import com.ocean.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -15,7 +17,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login")
+                .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/register")
                 .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
         //多个拦截器
 //        registry.addInterceptor(loginInterceptor());
@@ -26,7 +29,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public LoginInterceptor loginInterceptor() {
         return new LoginInterceptor();
     }
-
     /**
      * 防止@EnableMvc把默认的静态资源路径覆盖了，手动设置的方式
      *
@@ -52,5 +54,14 @@ public class WebConfig extends WebMvcConfigurationSupport {
                 .maxAge(3600)
                 .allowCredentials(true);
     }
+
+    /**
+     * 添加格式转换器
+     */
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new DateConverter());
+    }
+
 
 }

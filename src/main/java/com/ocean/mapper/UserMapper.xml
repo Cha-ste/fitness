@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocean.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.ocean.entity.User">
+    <result column="sid" jdbcType="INTEGER" property="sid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ocean.entity.User">
+    insert into users (username, password,
+      sex, phone, birthday, 
+      money)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{money,jdbcType=DECIMAL})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select sid, username, password, sex, phone, birthday, money
+    from users
+  </select>
+  <select id="getByUsername" parameterType="string" resultMap="BaseResultMap">
+    select * from users where username = #{username}
+  </select>
+  <select id="getUserForLogin" parameterType="string" resultMap="BaseResultMap">
+    select * from users where username = #{username} and password = #{password}
+  </select>
+  <select id="getUser" resultMap="BaseResultMap">
+    select * from users where sid = #{sid}
+  </select>
+  <select id="query" resultMap="BaseResultMap">
+    select sid, username, phone, sex, birthday, money from users
+    <if test="username != null and username != ''">
+      where username like concat('%', #{username}, '%')
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="Integer">
+    delete from users where sid = #{sid}
+  </delete>
+  <update id="changePassword">
+    update users
+    set password = #{newPassword}
+    where sid = #{sid}
+  </update>
+</mapper>
