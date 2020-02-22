@@ -36,6 +36,8 @@ public class CoachServiceImpl implements CoachService{
 
     @Override
     public void save(Coach model) {
+        // 密码加密存储
+        model.setPassword(MD5Util.inputPass2FormPass(model.getPassword()));
         int success = mapper.insert(model);
         if (success <= 0) {
             logger.error("[addCoach]add Coach={} fail",  model.toString());
@@ -47,6 +49,8 @@ public class CoachServiceImpl implements CoachService{
 
     @Override
     public void update(Coach model) {
+        // 密码加密存储
+        model.setPassword(MD5Util.inputPass2FormPass(model.getPassword()));
         int success = mapper.updateByPrimaryKeySelective(model);
         if (success <= 0) {
             logger.error("[updateCoach]update Coach={} fail",  model.toString());

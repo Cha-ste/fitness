@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
 
-    @Override
+    /*@Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/**")
@@ -28,7 +28,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
     @Bean
     public LoginInterceptor loginInterceptor() {
         return new LoginInterceptor();
-    }
+    }*/
     /**
      * 防止@EnableMvc把默认的静态资源路径覆盖了，手动设置的方式
      *

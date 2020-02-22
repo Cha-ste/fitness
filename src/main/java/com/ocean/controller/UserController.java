@@ -55,13 +55,14 @@ public class UserController {
         if (member == null) {
             return ResultBean.errorMsg("账号密码不正确");
         }
+        member.setPassword(null);
         return ResultBean.success(member);
     }
 
 
     @GetMapping(value = "/getUserInfo")
     @ApiOperation("获取会员信息")
-    public ResultBean<User> getUserInfo(Integer sid) {
+    public ResultBean<User> getUserInfo(@RequestParam("sid") Integer sid) {
         if (sid == null || sid.equals(0)) {
             return ResultBean.errorMsg("参数错误，sid 没有传递");
         }

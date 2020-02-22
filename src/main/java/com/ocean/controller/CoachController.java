@@ -47,14 +47,17 @@ public class CoachController {
 
     @GetMapping(value = "/get")
     @ApiOperation("获取教练信息")
-    public ResultBean<Coach> get(Integer tid) {
+    public ResultBean<Coach> get(@RequestParam("tid") Integer tid) {
+        if(com.ocean.utils.StringUtils.isNullOrZero(tid)) {
+            return ResultBean.errorMsg("参数错误：tid没有传递");
+        }
         try {
             Coach entity = service.getCoach(tid);
             entity.setPassword(null); // 隐藏密码
             return ResultBean.success(entity);
         } catch (Exception e) {
             logger.error("Fail:", e);
-            return ResultBean.ERROR;
+            return ResultBean.errorMsg("教练不存在");
         }
     }
 
