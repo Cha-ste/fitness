@@ -46,4 +46,6 @@ public interface CoachService {
      * @param newPassword 新密码
      */
     void changePassword(Integer tid, String newPassword);
+
+    Coach getCoachForLogin(String coachName, String password);
 }

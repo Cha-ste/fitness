@@ -63,4 +63,8 @@
   <update id="changePassword">
     update coach set password = #{newPassword} where tid = #{tid}
   </update>
+
+  <select id="getCoachForLogin" resultMap="BaseResultMap">
+    select * from coach where coach_name = #{coachName} and password = #{password}
+  </select>
 </mapper>

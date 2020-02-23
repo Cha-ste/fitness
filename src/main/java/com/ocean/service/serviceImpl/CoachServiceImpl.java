@@ -98,4 +98,10 @@ public class CoachServiceImpl implements CoachService{
     public void changePassword(Integer tid, String newPassword) {
         mapper.changePassword(tid, MD5Util.inputPass2FormPass(newPassword));
     }
+
+    @Override
+    public Coach getCoachForLogin(String coachName, String password) {
+        Coach model = mapper.getCoachForLogin(coachName, MD5Util.inputPass2FormPass(password));
+        return model;
+    }
 }

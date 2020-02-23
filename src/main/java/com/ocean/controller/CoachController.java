@@ -27,6 +27,26 @@ public class CoachController {
     @Autowired
     private CoachService service;
 
+    @GetMapping(value = "/login")
+    @ApiOperation("获取已发布课程的报名会员列表")
+    public ResultBean<String> login(@RequestParam("coachName")String coachName,
+                                        @RequestParam("password")String password) {
+        if (StringUtils.isEmpty(coachName)) {
+            return ResultBean.errorMsg("参数错误，coachName 没有传递");
+        }
+        if (StringUtils.isEmpty(password)) {
+            return ResultBean.errorMsg("参数错误，password 没有传递");
+        }
+
+        Coach coach = service.getCoachForLogin(coachName, password);
+        if(coach != null) {
+            // TODO 若需要做登录拦截，此处应返回 token
+            return ResultBean.success("登录成功");
+        } else {
+            return ResultBean.errorMsg("教练不存在或者密码错误");
+        }
+    }
+
     @GetMapping(value = "/traineeList")
     @ApiOperation("获取已发布课程的报名会员列表")
     public ResultBean<List<User>> get(Integer tid, Integer cid) {
@@ -84,6 +104,16 @@ public class CoachController {
     @PostMapping(value = "/save")
     @ApiOperation("新增或者修改教练信息（tid为空的时候新增，tid不空时为修改）")
     public ResultBean save(@RequestBody Coach model) {
+        if(StringUtils.isEmpty(model.getCoachName())) {
+            return ResultBean.errorMsg("教练名字不能为空");
+        }
+        if(StringUtils.isEmpty(model.getPassword())) {
+            return ResultBean.errorMsg("教练密码不能为空");
+        }
+        if(StringUtils.isEmpty(model.getPhone())) {
+            return ResultBean.errorMsg("教练电话不能为空");
+        }
+
         try {
             Coach record = new Coach();
             BeanUtils.copyProperties(model, record);

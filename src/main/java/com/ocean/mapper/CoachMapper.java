@@ -29,4 +29,7 @@ public interface CoachMapper {
 
     void changePassword(@Param("tid") Integer tid,
                         @Param("newPassword") String newPassword);
+
+    Coach getCoachForLogin(@Param("coachName")String coachName,
+                           @Param("password")String password);
 }
