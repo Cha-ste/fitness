@@ -48,15 +48,19 @@ public class UserController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "会员登录")
-    public ResultBean<Map<String, Object>> login(@RequestBody User user) {
-        if (StringUtils.isEmpty(user.getUsername())) {
+    public ResultBean<Map<String, Object>> login(@RequestParam("username") String username,
+                                                 @RequestParam("password") String password) {
+        if (StringUtils.isEmpty(username)) {
             ResultBean.errorMsg("用户名不能为空");
         }
-        if (StringUtils.isEmpty(user.getPassword())) {
+        if (StringUtils.isEmpty(password)) {
             ResultBean.errorMsg("密码不能为空");
         }
 
         Map<String, Object> result = new HashMap<>();
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
         User member = service.getUserForLogin(user);
         if (member == null) {
             return ResultBean.errorMsg("账号密码不正确");
