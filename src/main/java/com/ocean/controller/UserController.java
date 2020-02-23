@@ -5,6 +5,7 @@ import com.ocean.entity.User;
 import com.ocean.service.UserService;
 import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
+import com.ocean.vo.LoginVo;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,19 +49,18 @@ public class UserController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "会员登录")
-    public ResultBean<Map<String, Object>> login(@RequestParam("username") String username,
-                                                 @RequestParam("password") String password) {
-        if (StringUtils.isEmpty(username)) {
+    public ResultBean<Map<String, Object>> login(@RequestBody LoginVo vo) {
+        if (StringUtils.isEmpty(vo.getUsername())) {
             ResultBean.errorMsg("用户名不能为空");
         }
-        if (StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(vo.getPassword())) {
             ResultBean.errorMsg("密码不能为空");
         }
 
         Map<String, Object> result = new HashMap<>();
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+        user.setUsername(vo.getUsername());
+        user.setPassword(vo.getPassword());
         User member = service.getUserForLogin(user);
         if (member == null) {
             return ResultBean.errorMsg("账号密码不正确");

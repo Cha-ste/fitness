@@ -6,6 +6,7 @@ import com.ocean.entity.User;
 import com.ocean.service.CoachService;
 import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
+import com.ocean.vo.LoginVo;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,16 +34,15 @@ public class CoachController {
 
     @GetMapping(value = "/login")
     @ApiOperation("教练登录")
-    public ResultBean<Map<String, Object>> login(@RequestParam("coachName") String coachName,
-                                                 @RequestParam("password") String password) {
-        if (StringUtils.isEmpty(coachName)) {
+    public ResultBean<Map<String, Object>> login(@RequestBody LoginVo vo) {
+        if (StringUtils.isEmpty(vo.getCoachName())) {
             return ResultBean.errorMsg("参数错误，coachName 没有传递");
         }
-        if (StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(vo.getPassword())) {
             return ResultBean.errorMsg("参数错误，password 没有传递");
         }
 
-        Coach coach = service.getCoachForLogin(coachName, password);
+        Coach coach = service.getCoachForLogin(vo.getCoachName(), vo.getPassword());
         if (coach != null) {
             coach.setPassword(null);
             Map<String, Object> result = new HashMap<>();
