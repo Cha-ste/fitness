@@ -32,7 +32,7 @@ public class CoachController {
     @Autowired
     private CoachService service;
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     @ApiOperation("教练登录")
     public ResultBean<Map<String, Object>> login(@RequestBody LoginVo vo) {
         if (StringUtils.isEmpty(vo.getCoachName())) {
@@ -124,9 +124,6 @@ public class CoachController {
         }
         if (StringUtils.isEmpty(model.getPassword())) {
             return ResultBean.errorMsg("教练密码不能为空");
-        }
-        if (StringUtils.isEmpty(model.getPhone())) {
-            return ResultBean.errorMsg("教练电话不能为空");
         }
 
         try {
