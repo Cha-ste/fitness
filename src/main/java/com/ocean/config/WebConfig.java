@@ -18,6 +18,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(loginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/login")
+                .excludePathPatterns("/coach/login")
                 .excludePathPatterns("/user/register")
                 .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
         //多个拦截器

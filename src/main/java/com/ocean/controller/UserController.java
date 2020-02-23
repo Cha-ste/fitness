@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.ocean.entity.User;
 import com.ocean.service.UserService;
 import com.ocean.utils.MD5Util;
+import com.ocean.utils.TokenUtils;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController("UserController")
 @RequestMapping("/user")
@@ -43,7 +48,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "会员登录")
-    public ResultBean<User> login(@RequestBody User user) {
+    public ResultBean<Map<String, Object>> login(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getUsername())) {
             ResultBean.errorMsg("用户名不能为空");
         }
@@ -51,12 +56,21 @@ public class UserController {
             ResultBean.errorMsg("密码不能为空");
         }
 
+        Map<String, Object> result = new HashMap<>();
         User member = service.getUserForLogin(user);
         if (member == null) {
             return ResultBean.errorMsg("账号密码不正确");
         }
         member.setPassword(null);
-        return ResultBean.success(member);
+        result.put("user", member);
+
+        Map<String, Object> playLoad = new HashMap<>();
+        Date date = new Date();
+        playLoad.put("id", member.getSid());
+        playLoad.put("ct", date.getTime());
+        playLoad.put("ext", date.getTime() + 1000*60*120); //设置两个小时过期
+        result.put("token", TokenUtils.createToken(playLoad));
+        return ResultBean.success(result);
     }
 
 

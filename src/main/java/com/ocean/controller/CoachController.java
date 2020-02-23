@@ -5,6 +5,7 @@ import com.ocean.entity.Coach;
 import com.ocean.entity.User;
 import com.ocean.service.CoachService;
 import com.ocean.utils.MD5Util;
+import com.ocean.utils.TokenUtils;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController("CoachController")
 @RequestMapping("/coach")
@@ -28,9 +32,9 @@ public class CoachController {
     private CoachService service;
 
     @GetMapping(value = "/login")
-    @ApiOperation("获取已发布课程的报名会员列表")
-    public ResultBean<String> login(@RequestParam("coachName")String coachName,
-                                        @RequestParam("password")String password) {
+    @ApiOperation("教练登录")
+    public ResultBean<Map<String, Object>> login(@RequestParam("coachName") String coachName,
+                                                 @RequestParam("password") String password) {
         if (StringUtils.isEmpty(coachName)) {
             return ResultBean.errorMsg("参数错误，coachName 没有传递");
         }
@@ -39,9 +43,20 @@ public class CoachController {
         }
 
         Coach coach = service.getCoachForLogin(coachName, password);
-        if(coach != null) {
-            // TODO 若需要做登录拦截，此处应返回 token
-            return ResultBean.success("登录成功");
+        if (coach != null) {
+            coach.setPassword(null);
+            Map<String, Object> result = new HashMap<>();
+            result.put("coach", coach);
+
+            // 登录成功，返回token
+            Map<String, Object> playLoad = new HashMap<>();
+            Date date = new Date();
+            playLoad.put("id", coach.getTid());
+            playLoad.put("ct", date.getTime());
+            playLoad.put("ext", date.getTime() + 1000*60*120); //设置两个小时过期
+            result.put("token", TokenUtils.createToken(playLoad));
+
+            return ResultBean.success(result);
         } else {
             return ResultBean.errorMsg("教练不存在或者密码错误");
         }
@@ -68,7 +83,7 @@ public class CoachController {
     @GetMapping(value = "/get")
     @ApiOperation("获取教练信息")
     public ResultBean<Coach> get(@RequestParam("tid") Integer tid) {
-        if(com.ocean.utils.StringUtils.isNullOrZero(tid)) {
+        if (com.ocean.utils.StringUtils.isNullOrZero(tid)) {
             return ResultBean.errorMsg("参数错误：tid没有传递");
         }
         try {
@@ -104,13 +119,13 @@ public class CoachController {
     @PostMapping(value = "/save")
     @ApiOperation("新增或者修改教练信息（tid为空的时候新增，tid不空时为修改）")
     public ResultBean save(@RequestBody Coach model) {
-        if(StringUtils.isEmpty(model.getCoachName())) {
+        if (StringUtils.isEmpty(model.getCoachName())) {
             return ResultBean.errorMsg("教练名字不能为空");
         }
-        if(StringUtils.isEmpty(model.getPassword())) {
+        if (StringUtils.isEmpty(model.getPassword())) {
             return ResultBean.errorMsg("教练密码不能为空");
         }
-        if(StringUtils.isEmpty(model.getPhone())) {
+        if (StringUtils.isEmpty(model.getPhone())) {
             return ResultBean.errorMsg("教练电话不能为空");
         }
 

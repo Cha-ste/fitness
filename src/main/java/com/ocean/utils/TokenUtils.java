@@ -2,9 +2,12 @@ package com.ocean.utils;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
 import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -12,7 +15,7 @@ import java.util.Map;
  */
 @Component
 public class TokenUtils {
-    private static final String  SECRET = "shuXieChuanQiCongWoKaiShi2019999";
+    private static final String  SECRET = "fitnessSecret-2020-atLeast256Bit";
     private static final String  VALID = "valid";
     private static final String  EXPIRED = "expired";
     private static final String  INVALID = "invalid";
@@ -31,7 +34,7 @@ public class TokenUtils {
         JWSObject jwsObject = new JWSObject(header, new Payload(new JSONObject(payload)));
         try {
             // 将jwsObject 进行HMAC签名
-            jwsObject.sign(new MACSigner(SECRET));
+            jwsObject.sign(new MACSigner(SECRET.getBytes()));
 
             tokenString=jwsObject.serialize();
         } catch (JOSEException e) {
@@ -41,26 +44,19 @@ public class TokenUtils {
         return tokenString;
     }
 
-//    public static String genToken() {
-//
-//    }
-
-
     /**
      * 校验token是否合法
      *
      * @param token 字符串
      * @return token状态
      */
-    /*public static boolean validate(String token) {
+    public static boolean validate(String token) {
         Map<String, Object> payload = validToken(token);
         String state = (String)payload.get("state");
 
         switch (state) {
             case VALID:
                 return true;
-            case EXPIRED:
-                return false;
             default:
                 return false;
         }
@@ -101,7 +97,7 @@ public class TokenUtils {
             resultMap.put("state", INVALID);
         }
         return resultMap;
-    }*/
+    }
 
     public static boolean updateExp(String token) {
         String redisToken = JedisUtils.getString(token);
@@ -109,5 +105,4 @@ public class TokenUtils {
         long expiredTime = Long.parseLong(redisToken);
         return expiredTime <= System.currentTimeMillis();
     }
-
 }

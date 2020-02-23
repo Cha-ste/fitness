@@ -2,6 +2,7 @@ package com.ocean.interceptor;
 
 
 import com.alibaba.fastjson.JSON;
+import com.ocean.utils.TokenUtils;
 import com.ocean.vo.CodeMsg;
 import com.ocean.vo.ResultBean;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        if(StringUtils.isEmpty(token)){
+        if(StringUtils.isEmpty(token) || !TokenUtils.validate(token)){
             logger.info("用户未登录");
             printJson(response, CodeMsg.NO_LOGIN);
             return false;
