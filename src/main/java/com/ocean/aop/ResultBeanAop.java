@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class ResultBeanAop {
     private static Logger logger = LoggerFactory.getLogger(ResultBeanAop.class);
 
