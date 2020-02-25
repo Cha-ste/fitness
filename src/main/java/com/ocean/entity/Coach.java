@@ -6,13 +6,16 @@
 */
 package com.ocean.entity;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class Coach {
     private Integer tid;
 
+    @NotEmpty(message = "coachName 不能为空")
     private String coachName;
 
+    @NotEmpty(message = "password 不能为空")
     private String password;
 
     private Integer sex;
