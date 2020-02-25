@@ -4,9 +4,11 @@ import com.ocean.vo.CodeMsg;
 import com.ocean.vo.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,7 +42,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResultBean<String> misParamOrMatchExceptionHandler(MissingServletRequestParameterException e) {
         logger.error("请求参数不全:【" + e.getMessage() + "】");
-        return ResultBean.error(CodeMsg.BAD_REQUEST);
+        return ResultBean.error(CodeMsg.BAD_REQUEST.fillArgs(e.getMessage()));
     }
 
     /**
@@ -101,5 +103,29 @@ public class GlobalExceptionHandler {
         logger.error("类型转换异常:【" + e.getMessage() + "】");
         return ResultBean.error(CodeMsg.SERVER_ERROR);
     }
+
+    /**
+     * 参数校验错误
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResultBean<String> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        String message = getInvalidateMessage(e);
+        logger.error("参数错误:【" + message + "】");
+        return ResultBean.error(CodeMsg.ILLEGAL_ARGUMENT.fillArgs(message));
+    }
+
+    /**
+     * 拼接参数验证错误信息字符串
+     */
+    private String getInvalidateMessage(MethodArgumentNotValidException e) {
+        List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+        StringBuilder sb = new StringBuilder();
+        for(ObjectError error : allErrors) {
+            sb.append("；").append(error.getDefaultMessage());
+        }
+        String result = sb.substring(1, sb.length()).toString();
+        return result;
+    }
+
 
 }

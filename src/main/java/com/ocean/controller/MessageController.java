@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -27,7 +28,7 @@ public class MessageController {
 
     @GetMapping(value = "/get")
     @ApiOperation("获取消息信息")
-    public ResultBean<Message> get(Integer id) {
+    public ResultBean<Message> get(@RequestParam Integer id) {
         try {
             Message entity = service.getMessage(id);
             return ResultBean.success(entity);
@@ -60,14 +61,7 @@ public class MessageController {
 
     @PostMapping(value = "/save")
     @ApiOperation("发布或者修改消息（当nid为空时->发布，否则->修改）")
-    public ResultBean save(@RequestBody Message model) {
-        if (StringUtils.isEmpty(model.getTitle())) {
-            return ResultBean.errorMsg("请填写消息标题");
-        }
-        if (StringUtils.isEmpty(model.getContext())) {
-            return ResultBean.errorMsg("请填写消息内容");
-        }
-
+    public ResultBean save(@RequestBody @Validated Message model) {
         try {
             Message record = new Message();
             BeanUtils.copyProperties(model, record);
@@ -89,11 +83,7 @@ public class MessageController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除消息")
-    public ResultBean del(Integer nid) {
-        if (com.ocean.utils.StringUtils.isNullOrZero(nid)) {
-            return ResultBean.errorMsg("参数错误：nid没有传递");
-        }
-
+    public ResultBean del(@RequestParam Integer nid) {
         try {
             service.del(nid);
         } catch (Exception e) {

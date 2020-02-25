@@ -1,9 +1,9 @@
 package com.ocean.mapper;
 
 import com.ocean.entity.Course;
-import com.ocean.vo.CommentVo;
-import com.ocean.vo.CourseVo;
-import com.ocean.vo.MyCourseVo;
+import com.ocean.vo.CommentVO;
+import com.ocean.vo.CourseVO;
+import com.ocean.vo.MyCourseVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
@@ -28,9 +28,9 @@ public interface CourseMapper {
     List<Course> query(HashMap<String, Object> paramMap);
     int queryCount(HashMap<String, Object> paramMap);
 
-    List<CourseVo> getAllCourseList(Integer sid);
+    List<CourseVO> getAllCourseList(Integer sid);
 
-    List<MyCourseVo> getMemberCourseList(Integer sid);
+    List<MyCourseVO> getMemberCourseList(Integer sid);
 
     /**
      * 会员评论课程
@@ -48,7 +48,7 @@ public interface CourseMapper {
      * @param cid 课程id
      * @return 评论列表
      */
-    List<CommentVo> getCourseEvaluate(Integer cid);
+    List<CommentVO> getCourseEvaluate(Integer cid);
 
     /**
      * 获取教练发布的课程列表
@@ -56,7 +56,7 @@ public interface CourseMapper {
      * @param tid 教练id
      * @return 课程列表
      */
-    List<CourseVo> getCoachCourseList(Integer tid);
+    List<CourseVO> getCoachCourseList(Integer tid);
 
     int deleteCoachCourse(Integer tid, Integer cid);
 }

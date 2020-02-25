@@ -45,7 +45,7 @@
     select cid, tid, cname, cost, location, description, count
     from course
   </select>
-  <select id="getAllCourseList" parameterType="int" resultType="com.ocean.vo.CourseVo">
+  <select id="getAllCourseList" parameterType="int" resultType="com.ocean.vo.CourseVO">
     SELECT
       c.*,
       a.sid AS havePaid
@@ -62,7 +62,7 @@
         AND a.sid = #{sid}
   </select>
 
-  <select id="getMemberCourseList" parameterType="int" resultType="com.ocean.vo.MyCourseVo">
+  <select id="getMemberCourseList" parameterType="int" resultType="com.ocean.vo.MyCourseVO">
     select
       mc.*,
       com.context
@@ -105,7 +105,7 @@
     )
   </insert>
 
-  <select id="getCourseEvaluate" parameterType="int" resultType="com.ocean.vo.CommentVo">
+  <select id="getCourseEvaluate" parameterType="int" resultType="com.ocean.vo.CommentVO">
     select c.context, u.username from comment c, users u  where cid = #{cid} and c.sid = u.sid
   </select>
 

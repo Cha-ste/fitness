@@ -5,7 +5,8 @@ import com.ocean.entity.User;
 import com.ocean.service.UserService;
 import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
-import com.ocean.vo.LoginVo;
+import com.ocean.vo.CoachLoginVO;
+import com.ocean.vo.MemberLoginVO;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,8 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +35,7 @@ public class UserController {
 
     @PostMapping(value = "/register")
     @ApiOperation(value = "会员注册")
-    public ResultBean<String> register(@RequestBody User user) {
-        if (StringUtils.isEmpty(user.getUsername())) {
-            ResultBean.errorMsg("用户名不能为空");
-        }
-        if (StringUtils.isEmpty(user.getPassword())) {
-            ResultBean.errorMsg("密码不能为空");
-        }
+    public ResultBean<String> register(@RequestBody @Validated User user) {
         if (service.usernameExist(user.getUsername())) {
             ResultBean.errorMsg("用户名已经存在");
         }
@@ -49,14 +46,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "会员登录")
-    public ResultBean<Map<String, Object>> login(@RequestBody LoginVo vo) {
-        if (StringUtils.isEmpty(vo.getUsername())) {
-            ResultBean.errorMsg("用户名不能为空");
-        }
-        if (StringUtils.isEmpty(vo.getPassword())) {
-            ResultBean.errorMsg("密码不能为空");
-        }
-
+    public ResultBean<Map<String, Object>> login(@RequestBody @Validated MemberLoginVO vo) {
         Map<String, Object> result = new HashMap<>();
         User user = new User();
         user.setUsername(vo.getUsername());
@@ -81,9 +71,6 @@ public class UserController {
     @GetMapping(value = "/getUserInfo")
     @ApiOperation("获取会员信息")
     public ResultBean<User> getUserInfo(@RequestParam("sid") Integer sid) {
-        if (sid == null || sid.equals(0)) {
-            return ResultBean.errorMsg("参数错误，sid 没有传递");
-        }
         try {
             User entity = service.getUser(sid);
             entity.setPassword(null); // 隐藏密码
@@ -137,10 +124,7 @@ public class UserController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除会员")
-    public ResultBean del(Integer sid) {
-        if (com.ocean.utils.StringUtils.isNullOrZero(sid)) {
-            return ResultBean.errorMsg("参数错误：sid没有传递");
-        }
+    public ResultBean del(@RequestParam Integer sid) {
         try {
             service.del(sid);
         } catch (Exception e) {
@@ -152,17 +136,9 @@ public class UserController {
 
     @PostMapping(value = "/changePassword")
     @ApiOperation("修改会员密码")
-    public ResultBean changePassword(Integer sid, String oldPassword, String newPassword) {
-        if (com.ocean.utils.StringUtils.isNullOrZero(sid)) {
-            return ResultBean.errorMsg("参数错误：sid没有传递");
-        }
-        if (StringUtils.isEmpty(oldPassword)) {
-            return ResultBean.errorMsg("请输入旧的密码");
-        }
-        if (StringUtils.isEmpty(newPassword)) {
-            return ResultBean.errorMsg("请输入新的密码");
-        }
-
+    public ResultBean changePassword(@RequestParam Integer sid,
+                                     @RequestParam String oldPassword,
+                                     @RequestParam String newPassword) {
         User user = service.getUser(sid);
         if (user == null) {
             return ResultBean.errorMsg("会员不存在");

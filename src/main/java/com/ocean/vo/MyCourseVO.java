@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @ApiModel(value = "我的健身课程信息")
-public class MyCourseVo {
+public class MyCourseVO {
     private Integer cid;
     private Integer tid;
     private String cname;

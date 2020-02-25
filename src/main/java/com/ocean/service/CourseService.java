@@ -4,10 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import com.ocean.entity.Course;
 import com.github.pagehelper.PageInfo;
-import com.ocean.vo.CommentVo;
-import com.ocean.vo.CourseVo;
-import com.ocean.vo.MyCourseVo;
-import io.swagger.models.auth.In;
+import com.ocean.vo.CommentVO;
+import com.ocean.vo.CourseVO;
+import com.ocean.vo.MyCourseVO;
 
 
 public interface CourseService {
@@ -25,13 +24,13 @@ public interface CourseService {
     PageInfo<Course> query(int currentPage, int itemsPerPage, HashMap<String, Object> paramMap);
     int queryCount(HashMap<String, Object> paramMap);
 
-    List<CourseVo> getAllCourseList(Integer sid);
+    List<CourseVO> getAllCourseList(Integer sid);
 
-    List<MyCourseVo> getMemberCourseList(Integer sid);
+    List<MyCourseVO> getMemberCourseList(Integer sid);
 
     void evaluate(Integer cid, Integer sid, String context);
 
-    List<CommentVo> getCourseEvaluate(Integer cid);
+    List<CommentVO> getCourseEvaluate(Integer cid);
 
-    List<CourseVo> getCoachCourseList(Integer tid);
+    List<CourseVO> getCoachCourseList(Integer tid);
 }

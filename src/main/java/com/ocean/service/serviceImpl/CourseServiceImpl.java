@@ -5,9 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.ocean.entity.Course;
 import com.ocean.mapper.CourseMapper;
 import com.ocean.service.CourseService;
-import com.ocean.vo.CommentVo;
-import com.ocean.vo.CourseVo;
-import com.ocean.vo.MyCourseVo;
+import com.ocean.vo.CommentVO;
+import com.ocean.vo.CourseVO;
+import com.ocean.vo.MyCourseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +87,12 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<CourseVo> getAllCourseList(Integer sid) {
+    public List<CourseVO> getAllCourseList(Integer sid) {
         return mapper.getAllCourseList(sid);
     }
 
     @Override
-    public List<MyCourseVo> getMemberCourseList(Integer sid) {
+    public List<MyCourseVO> getMemberCourseList(Integer sid) {
         return mapper.getMemberCourseList(sid);
     }
 
@@ -102,12 +102,12 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<CommentVo> getCourseEvaluate(Integer cid) {
+    public List<CommentVO> getCourseEvaluate(Integer cid) {
         return mapper.getCourseEvaluate(cid);
     }
 
     @Override
-    public List<CourseVo> getCoachCourseList(Integer tid) {
+    public List<CourseVO> getCoachCourseList(Integer tid) {
         return mapper.getCoachCourseList(tid);
     }
 }

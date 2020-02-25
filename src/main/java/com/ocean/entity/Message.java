@@ -6,13 +6,16 @@
 */
 package com.ocean.entity;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class Message {
     private Integer nid;
 
+    @NotEmpty(message = "title 不能为空")
     private String title;
 
+    @NotEmpty(message = "context 不能为空")
     private String context;
 
     private Date ptime;

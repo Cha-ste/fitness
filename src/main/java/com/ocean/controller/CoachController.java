@@ -6,7 +6,7 @@ import com.ocean.entity.User;
 import com.ocean.service.CoachService;
 import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
-import com.ocean.vo.LoginVo;
+import com.ocean.vo.CoachLoginVO;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -34,14 +35,7 @@ public class CoachController {
 
     @PostMapping(value = "/login")
     @ApiOperation("教练登录")
-    public ResultBean<Map<String, Object>> login(@RequestBody LoginVo vo) {
-        if (StringUtils.isEmpty(vo.getCoachName())) {
-            return ResultBean.errorMsg("参数错误，coachName 没有传递");
-        }
-        if (StringUtils.isEmpty(vo.getPassword())) {
-            return ResultBean.errorMsg("参数错误，password 没有传递");
-        }
-
+    public ResultBean<Map<String, Object>> login(@RequestBody @Validated CoachLoginVO vo) {
         Coach coach = service.getCoachForLogin(vo.getCoachName(), vo.getPassword());
         if (coach != null) {
             coach.setPassword(null);
@@ -64,13 +58,8 @@ public class CoachController {
 
     @GetMapping(value = "/traineeList")
     @ApiOperation("获取已发布课程的报名会员列表")
-    public ResultBean<List<User>> get(Integer tid, Integer cid) {
-        if (tid == null || tid.equals(0)) {
-            return ResultBean.errorMsg("参数错误，tid 没有传递");
-        }
-        if (cid == null || cid.equals(0)) {
-            return ResultBean.errorMsg("参数错误，cid 没有传递");
-        }
+    public ResultBean<List<User>> get(@RequestParam Integer tid,
+                                      @RequestParam Integer cid) {
         try {
             List<User> memberList = service.getTraineeList(tid, cid);
             return ResultBean.success(memberList);
@@ -145,10 +134,7 @@ public class CoachController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除教练")
-    public ResultBean del(Integer tid) {
-        if (com.ocean.utils.StringUtils.isNullOrZero(tid)) {
-            return ResultBean.errorMsg("参数错误：tid没有传递");
-        }
+    public ResultBean del(@RequestParam Integer tid) {
         try {
             service.del(tid);
         } catch (Exception e) {
@@ -160,17 +146,9 @@ public class CoachController {
 
     @PostMapping(value = "/changePassword")
     @ApiOperation("修改教练密码")
-    public ResultBean changePassword(Integer tid, String oldPassword, String newPassword) {
-        if (com.ocean.utils.StringUtils.isNullOrZero(tid)) {
-            return ResultBean.errorMsg("参数错误：tid");
-        }
-        if (StringUtils.isEmpty(oldPassword)) {
-            return ResultBean.errorMsg("请输入旧的密码");
-        }
-        if (StringUtils.isEmpty(newPassword)) {
-            return ResultBean.errorMsg("请输入新的密码");
-        }
-
+    public ResultBean changePassword(@RequestParam Integer tid,
+                                     @RequestParam String oldPassword,
+                                     String newPassword) {
         Coach coach = service.getCoach(tid);
         if (coach == null) {
             return ResultBean.errorMsg("教练不存在");

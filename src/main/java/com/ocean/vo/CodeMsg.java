@@ -10,8 +10,8 @@ public class CodeMsg {
 
     //通用
     public static CodeMsg NOT_ALLOWED = new CodeMsg(400100, "http请求方法不正确");
-    public static CodeMsg BAD_REQUEST = new CodeMsg(400101, "http请求参数不全");
-    public static CodeMsg ILLEGAL_ARGUMENT = new CodeMsg(400102, "参数非法");
+    public static CodeMsg BAD_REQUEST = new CodeMsg(400101, "http请求参数不全:%s");
+    public static CodeMsg ILLEGAL_ARGUMENT = new CodeMsg(400102, "参数错误:%s");
     public static CodeMsg SUCCESS = new CodeMsg(0, "success");
     public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务器异常");
     public static CodeMsg BIND_ERROR = new CodeMsg(500101, "参数校验异常:%s");

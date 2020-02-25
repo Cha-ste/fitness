@@ -6,19 +6,26 @@
 */
 package com.ocean.entity;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
 public class Course {
     private Integer cid;
 
+    @DecimalMin(value = "1")
     private Integer tid;
 
+    @NotEmpty(message = "课程名称不能为空")
     private String cname;
 
+    @DecimalMin(value = "0")
     private BigDecimal cost;
 
+    @NotEmpty(message = "上课地址不能为空")
     private String location;
 
+    @NotEmpty(message = "课程介绍不能为空")
     private String description;
 
     private Integer count;

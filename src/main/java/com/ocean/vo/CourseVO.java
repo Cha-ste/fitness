@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Data
 @ApiModel(value = "健身课程信息")
-public class CourseVo {
+public class CourseVO {
     private Integer cid;
     private String cname;
     private BigDecimal cost;
