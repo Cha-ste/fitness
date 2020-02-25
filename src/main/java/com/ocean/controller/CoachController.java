@@ -148,7 +148,7 @@ public class CoachController {
     @ApiOperation("修改教练密码")
     public ResultBean changePassword(@RequestParam Integer tid,
                                      @RequestParam String oldPassword,
-                                     String newPassword) {
+                                     @RequestParam String newPassword) {
         Coach coach = service.getCoach(tid);
         if (coach == null) {
             return ResultBean.errorMsg("教练不存在");
