@@ -29,6 +29,7 @@ public class CourseController {
     private CourseService service;
 
     @GetMapping(value = "/get")
+    @ApiOperation("获取课程信息")
     public ResultBean<Course> get(@RequestParam Integer id) {
         try {
             Course entity = service.getCourse(id);
