@@ -138,7 +138,7 @@ public class CoachController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除教练")
-    public ResultBean del(@RequestParam Integer tid) {
+    public ResultBean del(@RequestBody Integer tid) {
         try {
             service.del(tid);
         } catch (Exception e) {
