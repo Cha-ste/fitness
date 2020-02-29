@@ -48,10 +48,10 @@ public class GlobalExceptionHandler {
     /**
      * 数据格式不正确
      */
-    @ExceptionHandler(DataFormatException.class)
-    public ResultBean<String> dataFormatExceptionHandler(DataFormatException e) {
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResultBean<String> dataFormatExceptionHandler(HttpMessageNotReadableException e) {
         logger.error("数据格式不正确:【" + e.getMessage() + "】");
-        return ResultBean.error(CodeMsg.SERVER_ERROR);
+        return ResultBean.error(CodeMsg.ILLEGAL_ARGUMENT.fillArgs(e.getMessage()));
     }
 
     /**

@@ -4,6 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.zip.DataFormatException;
 
 public class DateConverter implements Converter<String, Date> {
     private final SimpleDateFormat smf =  new SimpleDateFormat("yyyyMMdd");
@@ -16,7 +17,7 @@ public class DateConverter implements Converter<String, Date> {
         try {
             return smf.parse(s);
         }catch (Exception e){
-            e.printStackTrace();
+            new DataFormatException();
         }
         return null;
     }
