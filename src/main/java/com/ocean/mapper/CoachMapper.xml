@@ -39,7 +39,7 @@
   </select>
 
   <select id="query" parameterType="string" resultMap="BaseResultMap">
-    select tid, coach_name, sex, phone, birthday from coach
+    select tid, coach_name, password, sex, phone, birthday from coach
     <if test="coachName != null and coachName != ''">
       where coach_name like concat('%', #{coachName}, '%')
     </if>

@@ -125,7 +125,7 @@ public class UserController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除会员")
-    public ResultBean del(@RequestBody Integer sid) {
+    public ResultBean del(Integer sid) {
         try {
             service.del(sid);
         } catch (Exception e) {

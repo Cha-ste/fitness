@@ -2,10 +2,7 @@ package com.ocean.controller;
 
 import com.ocean.entity.Course;
 import com.ocean.service.CourseService;
-import com.ocean.vo.CommentVO;
-import com.ocean.vo.CourseVO;
-import com.ocean.vo.MyCourseVO;
-import com.ocean.vo.ResultBean;
+import com.ocean.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -109,10 +106,9 @@ public class CourseController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除教练发布的课程")
-    public ResultBean del(@RequestParam Integer cid,
-                          @RequestParam Integer tid) {
+    public ResultBean del(@RequestBody CourseDelVo vo) {
         try {
-            service.del(tid, cid);
+            service.del(vo.getTid(), vo.getCid());
         } catch (Exception e) {
             logger.error("Fail:", e);
             return ResultBean.errorMsg("删除失败：课程不存在，或者课程不是该教练所发布");

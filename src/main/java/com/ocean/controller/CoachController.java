@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -138,7 +139,7 @@ public class CoachController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除教练")
-    public ResultBean del(@RequestBody Integer tid) {
+    public ResultBean del(Integer tid) {
         try {
             service.del(tid);
         } catch (Exception e) {

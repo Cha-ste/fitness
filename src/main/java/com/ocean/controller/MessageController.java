@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @RestController("MessageController")
@@ -83,7 +84,7 @@ public class MessageController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除消息")
-    public ResultBean del(@RequestParam Integer nid) {
+    public ResultBean del(Integer nid) {
         try {
             service.del(nid);
         } catch (Exception e) {
