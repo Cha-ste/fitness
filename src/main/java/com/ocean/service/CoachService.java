@@ -48,4 +48,6 @@ public interface CoachService {
     void changePassword(Integer tid, String newPassword);
 
     Coach getCoachForLogin(String coachName, String password);
+
+    boolean coachNameExist(String coachName);
 }

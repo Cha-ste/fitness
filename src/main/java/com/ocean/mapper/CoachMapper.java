@@ -32,4 +32,6 @@ public interface CoachMapper {
 
     Coach getCoachForLogin(@Param("coachName")String coachName,
                            @Param("password")String password);
+
+    int coachNameExist(String coachName);
 }

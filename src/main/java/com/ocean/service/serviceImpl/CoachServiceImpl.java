@@ -104,4 +104,9 @@ public class CoachServiceImpl implements CoachService{
         Coach model = mapper.getCoachForLogin(coachName, MD5Util.inputPass2FormPass(password));
         return model;
     }
+
+    @Override
+    public boolean coachNameExist(String coachName) {
+        return mapper.coachNameExist(coachName) > 0;
+    }
 }
