@@ -6,6 +6,7 @@ import com.ocean.service.UserService;
 import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
 import com.ocean.vo.CoachLoginVO;
+import com.ocean.vo.MemberChangePasswordVo;
 import com.ocean.vo.MemberLoginVO;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
@@ -37,7 +38,7 @@ public class UserController {
     @ApiOperation(value = "会员注册")
     public ResultBean<String> register(@RequestBody @Validated User user) {
         if (service.usernameExist(user.getUsername())) {
-            ResultBean.errorMsg("用户名已经存在");
+            return ResultBean.errorMsg("用户名已经存在");
         }
 
         service.save(user);
@@ -62,7 +63,7 @@ public class UserController {
         Date date = new Date();
         playLoad.put("id", member.getSid());
         playLoad.put("ct", date.getTime());
-        playLoad.put("ext", date.getTime() + 1000*60*120); //设置两个小时过期
+        playLoad.put("ext", date.getTime() + 1000*60*60*120); //设置两个小时过期
         result.put("token", TokenUtils.createToken(playLoad));
         return ResultBean.success(result);
     }
@@ -136,21 +137,19 @@ public class UserController {
 
     @PostMapping(value = "/changePassword")
     @ApiOperation("修改会员密码")
-    public ResultBean changePassword(@RequestParam Integer sid,
-                                     @RequestParam String oldPassword,
-                                     @RequestParam String newPassword) {
-        User user = service.getUser(sid);
+    public ResultBean changePassword(@RequestBody MemberChangePasswordVo vo) {
+        User user = service.getUser(vo.getSid());
         if (user == null) {
             return ResultBean.errorMsg("会员不存在");
         }
-        if (!user.getPassword().equals(MD5Util.inputPass2FormPass(oldPassword))) {
+        if (!user.getPassword().equals(MD5Util.inputPass2FormPass(vo.getOldPassword()))) {
             return ResultBean.errorMsg("旧密码错误，请重新输入");
         }
-        if (newPassword.equals(MD5Util.inputPass2FormPass(newPassword))) {
+        if (user.getPassword().equals(MD5Util.inputPass2FormPass(vo.getNewPassword()))) {
             return ResultBean.errorMsg("新密码和旧密码一样，请重新输入");
         }
 
-        service.changePassword(sid, newPassword);
+        service.changePassword(vo.getSid(), vo.getNewPassword());
 
         return ResultBean.success("修改成功");
     }

@@ -32,7 +32,7 @@
     select * from users where sid = #{sid}
   </select>
   <select id="query" resultMap="BaseResultMap">
-    select sid, username, phone, sex, birthday, money from users
+    select sid, username, password, phone, sex, birthday, money from users
     <if test="username != null and username != ''">
       where username like concat('%', #{username}, '%')
     </if>

@@ -6,6 +6,7 @@ import com.ocean.entity.User;
 import com.ocean.service.CoachService;
 import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
+import com.ocean.vo.CoachChangePasswordVo;
 import com.ocean.vo.CoachLoginVO;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
@@ -149,21 +150,19 @@ public class CoachController {
 
     @PostMapping(value = "/changePassword")
     @ApiOperation("修改教练密码")
-    public ResultBean changePassword(@RequestParam Integer tid,
-                                     @RequestParam String oldPassword,
-                                     @RequestParam String newPassword) {
-        Coach coach = service.getCoach(tid);
+    public ResultBean changePassword(@RequestBody CoachChangePasswordVo vo) {
+        Coach coach = service.getCoach(vo.getTid());
         if (coach == null) {
             return ResultBean.errorMsg("教练不存在");
         }
-        if (!coach.getPassword().equals(MD5Util.inputPass2FormPass(oldPassword))) {
+        if (!coach.getPassword().equals(MD5Util.inputPass2FormPass(vo.getOldPassword()))) {
             return ResultBean.errorMsg("旧密码错误，请重新输入");
         }
-        if (coach.getPassword().equals(MD5Util.inputPass2FormPass(newPassword))) {
+        if (coach.getPassword().equals(MD5Util.inputPass2FormPass(vo.getNewPassword()))) {
             return ResultBean.errorMsg("新密码和旧密码一样，请重新输入");
         }
 
-        service.changePassword(tid, newPassword);
+        service.changePassword(vo.getTid(), vo.getNewPassword());
 
         return ResultBean.success("修改成功");
     }
