@@ -54,16 +54,16 @@
         course.*,
         coach.coach_name AS coachName
       FROM
-        course
-        LEFT JOIN coach
-          ON course.tid = coach.tid) AS c
+        course, coach
+      where course.tid = coach.tid
+        <if test="keyword != null and keyword != ''">
+          AND (coach.coach_name like concat('%', #{keyword}, '%')
+          OR course.cname like concat('%', #{keyword}, '%'))
+        </if>
+    ) AS c
       LEFT JOIN apply a
         ON c.cid = a.cid
         AND a.sid = #{sid}
-        <if test="keyword != null and keyword != ''">
-          AND (c.coachName like concat('%', #{keyword}, '%')
-            OR c.cname like concat('%', #{keyword}, '%'))
-        </if>
   </select>
 
   <select id="getMemberCourseList" parameterType="int" resultType="com.ocean.vo.MyCourseVO">
