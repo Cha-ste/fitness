@@ -60,6 +60,10 @@
       LEFT JOIN apply a
         ON c.cid = a.cid
         AND a.sid = #{sid}
+        <if test="keyword != null and keyword != ''">
+          AND (c.coachName like concat('%', #{keyword}, '%')
+            OR c.cname like concat('%', #{keyword}, '%'))
+        </if>
   </select>
 
   <select id="getMemberCourseList" parameterType="int" resultType="com.ocean.vo.MyCourseVO">

@@ -28,7 +28,8 @@ public interface CourseMapper {
     List<Course> query(HashMap<String, Object> paramMap);
     int queryCount(HashMap<String, Object> paramMap);
 
-    List<CourseVO> getAllCourseList(Integer sid);
+    List<CourseVO> getAllCourseList(@Param("sid")Integer sid,
+                                    @Param("keyword")String keyword);
 
     List<MyCourseVO> getMemberCourseList(Integer sid);
 

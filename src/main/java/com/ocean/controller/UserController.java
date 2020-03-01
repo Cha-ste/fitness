@@ -2,13 +2,11 @@ package com.ocean.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ocean.entity.User;
+import com.ocean.service.CoachService;
 import com.ocean.service.UserService;
 import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
-import com.ocean.vo.CoachLoginVO;
-import com.ocean.vo.MemberChangePasswordVo;
-import com.ocean.vo.MemberLoginVO;
-import com.ocean.vo.ResultBean;
+import com.ocean.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -33,6 +31,32 @@ public class UserController {
 
     @Autowired
     private UserService service;
+    @Autowired
+    private CoachService coachService;
+
+    @PostMapping(value = "/changePasswordByManager")
+    @ApiOperation(value = "管理员修改别人密码")
+    public ResultBean<String> changePasswordByManager(
+            @RequestBody @Validated ManagerChangePasswordVo vo) {
+        if(!"sadministrator".equals(vo.getManagerName())
+                || !"sadministrator".equals(vo.getManagerPassword())) {
+            return ResultBean.errorMsg("管理员账号密码错误");
+        }
+
+        try {
+            if ("coach".equals(vo.getUserType())) {
+                service.changePassword(vo.getId(), vo.getNewPassword());
+            } else if("member".equals(vo.getUserType())) {
+                coachService.changePassword(vo.getId(), vo.getNewPassword());
+            } else {
+                return ResultBean.errorMsg("用户类型错误");
+            }
+        } catch (RuntimeException e) {
+            return ResultBean.errorMsg("用户不存在，密码修改失败");
+        }
+
+        return ResultBean.success("修改成功");
+    }
 
     @PostMapping(value = "/register")
     @ApiOperation(value = "会员注册")

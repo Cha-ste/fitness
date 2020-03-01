@@ -78,8 +78,9 @@ public class CourseController {
     @GetMapping(value = "/getAllCourseList")
     @ResponseBody
     @ApiOperation(value = "获取所有课程列表")
-    public ResultBean<List<CourseVO>> getAllCourseList(@RequestParam Integer sid) {
-        List<CourseVO> courseList = service.getAllCourseList(sid);
+    public ResultBean<List<CourseVO>> getAllCourseList(@RequestParam Integer sid,
+                                                       @RequestParam String keyword) {
+        List<CourseVO> courseList = service.getAllCourseList(sid, keyword);
 
         return ResultBean.success(courseList);
     }

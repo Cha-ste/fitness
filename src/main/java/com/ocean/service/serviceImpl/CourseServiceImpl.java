@@ -87,8 +87,8 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public List<CourseVO> getAllCourseList(Integer sid) {
-        return mapper.getAllCourseList(sid);
+    public List<CourseVO> getAllCourseList(Integer sid, String keyword) {
+        return mapper.getAllCourseList(sid, keyword);
     }
 
     @Override

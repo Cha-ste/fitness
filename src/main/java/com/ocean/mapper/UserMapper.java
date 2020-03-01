@@ -26,5 +26,5 @@ public interface UserMapper {
     User getUserForLogin(@Param("username") String username,
                          @Param("password")String password);
 
-    void changePassword(@Param("sid")Integer sid, @Param("newPassword")String newPassword);
+    int changePassword(@Param("sid")Integer sid, @Param("newPassword")String newPassword);
 }

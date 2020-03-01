@@ -98,7 +98,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void changePassword(Integer sid, String newPassword) {
-        mapper.changePassword(sid, MD5Util.inputPass2FormPass(newPassword));
+    public void changePassword(Integer sid, String newPassword){
+        int success = mapper.changePassword(sid, MD5Util.inputPass2FormPass(newPassword));
+        if (success == 0) {
+            throw new RuntimeException("用户不存在");
+        }
     }
 }

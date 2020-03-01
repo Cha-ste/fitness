@@ -24,7 +24,7 @@ public interface CourseService {
     PageInfo<Course> query(int currentPage, int itemsPerPage, HashMap<String, Object> paramMap);
     int queryCount(HashMap<String, Object> paramMap);
 
-    List<CourseVO> getAllCourseList(Integer sid);
+    List<CourseVO> getAllCourseList(Integer sid, String keyword);
 
     List<MyCourseVO> getMemberCourseList(Integer sid);
 
