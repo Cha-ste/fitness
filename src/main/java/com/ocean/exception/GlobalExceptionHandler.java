@@ -127,5 +127,20 @@ public class GlobalExceptionHandler {
         return result;
     }
 
+    @ExceptionHandler(BindException.class)
+    public ResultBean<String> bindExceptionHandler(BindException e) {
+        String message = getBindExceptionMessage(e);
+        logger.error("参数错误:【" + message + "】");
+        return ResultBean.error(CodeMsg.ILLEGAL_ARGUMENT.fillArgs(message));
+    }
 
+    private String getBindExceptionMessage(BindException e) {
+        List<ObjectError> allErrors = e.getAllErrors();
+        StringBuilder sb = new StringBuilder();
+        for(ObjectError error : allErrors) {
+            sb.append("；").append(error.getDefaultMessage());
+        }
+        String result = sb.substring(1, sb.length());
+        return result;
+    }
 }

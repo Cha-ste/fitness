@@ -51,7 +51,7 @@ public class CoachServiceImpl implements CoachService{
     public void update(Coach model) {
         // 密码加密存储
         model.setPassword(MD5Util.inputPass2FormPass(model.getPassword()));
-        int success = mapper.updateByPrimaryKeySelective(model);
+        int success = mapper.updateByPrimaryKey(model);
         if (success <= 0) {
             logger.error("[updateCoach]update Coach={} fail",  model.toString());
             throw new RuntimeException("Modify data fail");

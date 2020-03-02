@@ -37,7 +37,7 @@ public class CoachController {
 
     @PostMapping(value = "/login")
     @ApiOperation("教练登录")
-    public ResultBean<Map<String, Object>> login(@RequestBody @Validated CoachLoginVO vo) {
+    public ResultBean<Map<String, Object>> login(@Validated CoachLoginVO vo) {
         Coach coach = service.getCoachForLogin(vo.getCoachName(), vo.getPassword());
         if (coach != null) {
             coach.setPassword(null);
@@ -109,7 +109,7 @@ public class CoachController {
 
     @PostMapping(value = "/save")
     @ApiOperation("新增或者修改教练信息（tid为空的时候新增，tid不空时为修改）")
-    public ResultBean save(@RequestBody Coach model) {
+    public ResultBean save(Coach model) {
         if (StringUtils.isEmpty(model.getCoachName())) {
             return ResultBean.errorMsg("教练名字不能为空");
         }
@@ -151,7 +151,7 @@ public class CoachController {
 
     @PostMapping(value = "/changePassword")
     @ApiOperation("修改教练密码")
-    public ResultBean changePassword(@RequestBody CoachChangePasswordVo vo) {
+    public ResultBean changePassword(CoachChangePasswordVo vo) {
         Coach coach = service.getCoach(vo.getTid());
         if (coach == null) {
             return ResultBean.errorMsg("教练不存在");

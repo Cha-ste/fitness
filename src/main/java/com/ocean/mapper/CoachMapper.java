@@ -15,7 +15,7 @@ public interface CoachMapper {
 
     int insertSelective(Coach record);
 
-    int updateByPrimaryKeySelective(Coach record);
+    int updateByPrimaryKey(Coach record);
 
     int getCount();
 

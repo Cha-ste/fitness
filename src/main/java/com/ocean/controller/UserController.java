@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping(value = "/changePasswordByManager")
     @ApiOperation(value = "管理员修改别人密码")
     public ResultBean<String> changePasswordByManager(
-            @RequestBody @Validated ManagerChangePasswordVo vo) {
+            @Validated ManagerChangePasswordVo vo) {
         if(!"sadministrator".equals(vo.getManagerName())
                 || !"sadministrator".equals(vo.getManagerPassword())) {
             return ResultBean.errorMsg("管理员账号密码错误");
@@ -60,7 +60,7 @@ public class UserController {
 
     @PostMapping(value = "/register")
     @ApiOperation(value = "会员注册")
-    public ResultBean<String> register(@RequestBody @Validated User user) {
+    public ResultBean<String> register(@Validated User user) {
         if (service.usernameExist(user.getUsername())) {
             return ResultBean.errorMsg("用户名已经存在");
         }
@@ -71,7 +71,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "会员登录")
-    public ResultBean<Map<String, Object>> login(@RequestBody @Validated MemberLoginVO vo) {
+    public ResultBean<Map<String, Object>> login(@Validated MemberLoginVO vo) {
         Map<String, Object> result = new HashMap<>();
         User user = new User();
         user.setUsername(vo.getUsername());
@@ -129,7 +129,7 @@ public class UserController {
 
     @PostMapping(value = "/save")
     @ApiOperation("修改会员信息")
-    public ResultBean save(@RequestBody User model) {
+    public ResultBean save(User model) {
         try {
             User record = new User();
             BeanUtils.copyProperties(model, record);
@@ -161,7 +161,7 @@ public class UserController {
 
     @PostMapping(value = "/changePassword")
     @ApiOperation("修改会员密码")
-    public ResultBean changePassword(@RequestBody MemberChangePasswordVo vo) {
+    public ResultBean changePassword(MemberChangePasswordVo vo) {
         User user = service.getUser(vo.getSid());
         if (user == null) {
             return ResultBean.errorMsg("会员不存在");

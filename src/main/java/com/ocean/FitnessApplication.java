@@ -15,10 +15,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 })
 @MapperScan("com.ocean.mapper")
 @EnableScheduling
-public class BaseFrameworkApplication {
+public class FitnessApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BaseFrameworkApplication.class, args);
+		SpringApplication.run(FitnessApplication.class, args);
 	}
 
 }
