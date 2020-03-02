@@ -53,7 +53,7 @@
                              targetProject="./src"/>-->
 
         <!-- 需要生成代码的表名，每个表一个table节点如下 -->
-        <table tableName="message" domainObjectName="Message"/>
+        <table tableName="apply" domainObjectName="Apply"/>
 
     </context>
 </generatorConfiguration>

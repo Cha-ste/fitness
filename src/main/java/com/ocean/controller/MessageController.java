@@ -62,7 +62,7 @@ public class MessageController {
 
     @PostMapping(value = "/save")
     @ApiOperation("发布或者修改消息（当nid为空时->发布，否则->修改）")
-    public ResultBean save(@RequestBody @Validated Message model) {
+    public ResultBean save(@Validated Message model) {
         try {
             Message record = new Message();
             BeanUtils.copyProperties(model, record);
