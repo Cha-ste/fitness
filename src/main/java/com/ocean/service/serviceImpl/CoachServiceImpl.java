@@ -96,7 +96,10 @@ public class CoachServiceImpl implements CoachService{
 
     @Override
     public void changePassword(Integer tid, String newPassword) {
-        mapper.changePassword(tid, MD5Util.inputPass2FormPass(newPassword));
+        int success = mapper.changePassword(tid, MD5Util.inputPass2FormPass(newPassword));
+        if(success == 0) {
+            throw new RuntimeException("用户不存在");
+        }
     }
 
     @Override

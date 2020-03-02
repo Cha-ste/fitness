@@ -45,9 +45,9 @@ public class UserController {
 
         try {
             if ("coach".equals(vo.getUserType())) {
-                service.changePassword(vo.getId(), vo.getNewPassword());
-            } else if("member".equals(vo.getUserType())) {
                 coachService.changePassword(vo.getId(), vo.getNewPassword());
+            } else if("member".equals(vo.getUserType())) {
+                service.changePassword(vo.getId(), vo.getNewPassword());
             } else {
                 return ResultBean.errorMsg("用户类型错误");
             }
@@ -135,16 +135,15 @@ public class UserController {
             BeanUtils.copyProperties(model, record);
 
             if (record.getSid() == null) {
-                service.save(record);
+                return ResultBean.errorMsg("参数错误：sid没有传递");
             } else {
                 service.update(record);
+                return ResultBean.success("保存成功");
             }
-
         } catch (Exception e) {
             logger.error("Fail:", e);
             return ResultBean.ERROR;
         }
-        return ResultBean.success("保存成功");
     }
 
     @PostMapping(value = "/del")

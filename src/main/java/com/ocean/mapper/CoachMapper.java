@@ -27,7 +27,7 @@ public interface CoachMapper {
 
     List<User> getTraineeList(Integer tid, Integer cid);
 
-    void changePassword(@Param("tid") Integer tid,
+    int changePassword(@Param("tid") Integer tid,
                         @Param("newPassword") String newPassword);
 
     Coach getCoachForLogin(@Param("coachName")String coachName,
