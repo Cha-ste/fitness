@@ -45,7 +45,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void update(Message model) {
-        int success = mapper.updateByPrimaryKeySelective(model);
+        int success = mapper.updateByPrimaryKey(model);
         if (success <= 0) {
             logger.error("[updateMessage]update Message={} fail", model.toString());
             throw new RuntimeException("Modify data fail");

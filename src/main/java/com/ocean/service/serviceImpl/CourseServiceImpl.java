@@ -49,7 +49,7 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public void update(Course model) {
-        int success = mapper.updateByPrimaryKeySelective(model);
+        int success = mapper.updateByPrimaryKey(model);
         if (success <= 0) {
             logger.error("[updateCourse]update Course={} fail",  model.toString());
             throw new RuntimeException("Modify data fail");

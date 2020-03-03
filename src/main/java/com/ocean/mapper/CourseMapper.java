@@ -59,5 +59,6 @@ public interface CourseMapper {
      */
     List<CourseVO> getCoachCourseList(Integer tid);
 
-    int deleteCoachCourse(Integer tid, Integer cid);
+    int deleteCoachCourse(@Param("tid") Integer tid,
+                          @Param("cid") Integer cid);
 }
