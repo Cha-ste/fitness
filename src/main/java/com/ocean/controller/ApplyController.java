@@ -1,6 +1,7 @@
 package com.ocean.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ocean.vo.ApplyVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 
 @RestController("ApplyController")
-@RequestMapping("/Apply")
+@RequestMapping("/apply")
 @Api(tags = "报名相关接口")
 public class ApplyController {
 
@@ -62,18 +63,16 @@ public class ApplyController {
         return ResultBean.success(pageInfo);
     }
 
-    @PostMapping(value = "/save")
-    public ResultBean save(Apply model) {
+    @PostMapping(value = "/apply")
+    @ApiOperation("会员报名")
+    public ResultBean save(ApplyVO vo) {
         try {
             Apply record = new Apply();
-            BeanUtils.copyProperties(model, record);
+            record.setCid(vo.getCid());
+            record.setSid(vo.getSid());
+            record.setPunch(vo.getPunch());
 
-            if (record.getCid() == null) {
-                //TODO 设置主键
-                service.save(record);
-            } else {
-                service.update(record);
-            }
+            service.save(record);
 
         } catch (Exception e) {
             logger.error("Fail:", e);
@@ -82,10 +81,10 @@ public class ApplyController {
         return ResultBean.success("保存成功");
     }
 
-    @DeleteMapping(value = "/del", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultBean del(String id) {
+    @DeleteMapping(value = "/del")
+    public ResultBean del(Integer cid, Integer sid) {
         try {
-            service.del(id);
+            service.del(cid, sid);
         } catch (Exception e) {
             logger.error("Fail:", e);
             return ResultBean.ERROR;

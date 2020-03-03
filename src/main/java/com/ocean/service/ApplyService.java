@@ -14,7 +14,7 @@ public interface ApplyService {
 
     void update(Apply model);
 
-    void del(String id);
+    void del(Integer cid, Integer sid);
 
     int getCount();
 

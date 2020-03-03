@@ -1,6 +1,8 @@
 package com.ocean.mapper;
 
 import com.ocean.entity.Apply;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,4 +25,5 @@ public interface ApplyMapper {
     List<Apply> query(HashMap<String, Object> paramMap);
     int queryCount(HashMap<String, Object> paramMap);
 
+    int delete(@Param("cid") Integer cid, @Param("sid") Integer sid);
 }

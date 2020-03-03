@@ -55,11 +55,11 @@ public class ApplyServiceImpl implements ApplyService{
     }
 
     @Override
-    public void del(String id) {
+    public void del(Integer cid, Integer sid) {
 
-        int success = mapper.deleteByPrimaryKey(id);
+        int success = mapper.delete(cid, sid);
         if (success <= 0) {
-            logger.error("[deleteApply]delete Apply id={} fail", id);
+            logger.error("[deleteApply]delete Apply cid={}, sid={} fail", cid, sid);
             throw new RuntimeException("Del data fail");
         }
         return;

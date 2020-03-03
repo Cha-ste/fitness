@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.ocean.entity.Apply">
     <result column="cid" jdbcType="INTEGER" property="cid" />
     <result column="sid" jdbcType="INTEGER" property="sid" />
-    <result column="tid" jdbcType="INTEGER" property="tid" />
     <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
     <result column="setTime" jdbcType="VARCHAR" property="settime" />
     <result column="appointment" jdbcType="INTEGER" property="appointment" />
@@ -14,18 +13,22 @@
     <result column="punch" jdbcType="INTEGER" property="punch" />
   </resultMap>
   <insert id="insert" parameterType="com.ocean.entity.Apply">
-    insert into apply (cid, sid, tid, 
-      ctime, setTime, appointment, 
-      appointok, clockin, prohibit, 
+    insert into apply (cid, sid,
+      ctime, setTime, appointment,
+      appointok, clockin, prohibit,
       punch)
-    values (#{cid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, 
-      #{ctime,jdbcType=TIMESTAMP}, #{settime,jdbcType=VARCHAR}, #{appointment,jdbcType=INTEGER}, 
-      #{appointok,jdbcType=VARCHAR}, #{clockin,jdbcType=VARCHAR}, #{prohibit,jdbcType=VARCHAR}, 
+    values (#{cid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER},
+      #{ctime,jdbcType=TIMESTAMP}, #{settime,jdbcType=VARCHAR}, #{appointment,jdbcType=INTEGER},
+      #{appointok,jdbcType=VARCHAR}, #{clockin,jdbcType=VARCHAR}, #{prohibit,jdbcType=VARCHAR},
       #{punch,jdbcType=INTEGER})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
-    select cid, sid, tid, ctime, setTime, appointment, appointok, clockin, prohibit, 
+    select cid, sid, ctime, setTime, appointment, appointok, clockin, prohibit,
     punch
     from apply
   </select>
+
+  <delete id="delete">
+    delete from apply where cid = #{cid} and sid = #{sid}
+  </delete>
 </mapper>

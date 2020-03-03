@@ -13,8 +13,6 @@ public class Apply {
 
     private Integer sid;
 
-    private Integer tid;
-
     private Date ctime;
 
     private String settime;
@@ -43,14 +41,6 @@ public class Apply {
 
     public void setSid(Integer sid) {
         this.sid = sid;
-    }
-
-    public Integer getTid() {
-        return tid;
-    }
-
-    public void setTid(Integer tid) {
-        this.tid = tid;
     }
 
     public Date getCtime() {
