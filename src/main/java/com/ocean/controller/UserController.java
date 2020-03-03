@@ -131,13 +131,10 @@ public class UserController {
     @ApiOperation("修改会员信息")
     public ResultBean save(User model) {
         try {
-            User record = new User();
-            BeanUtils.copyProperties(model, record);
-
-            if (record.getSid() == null) {
+            if (com.ocean.utils.StringUtils.isNullOrZero(model.getSid())) {
                 return ResultBean.errorMsg("参数错误：sid没有传递");
             } else {
-                service.update(record);
+                service.update(model);
                 return ResultBean.success("保存成功");
             }
         } catch (Exception e) {
