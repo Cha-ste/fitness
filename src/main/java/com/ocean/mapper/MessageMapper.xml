@@ -36,6 +36,6 @@
       where title like concat('%', #{keyword}, '%')
             or context like concat('%', #{keyword}, '%')
     </if>
-    order by id desc
+    order by nid desc
   </select>
 </mapper>
