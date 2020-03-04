@@ -48,7 +48,7 @@
   <select id="getAllCourseList" parameterType="int" resultType="com.ocean.vo.CourseVO">
     SELECT
       c.*,
-      a.sid AS havePaid
+      if(a.sid is not null, 1, 0) AS havePaid
     FROM
       (SELECT
         course.*,

@@ -102,9 +102,10 @@ public class CourseController {
 
     @PostMapping(value = "/del")
     @ApiOperation("删除教练发布的课程")
-    public ResultBean del(@Validated CourseDelVo vo) {
+    public ResultBean del(@RequestParam Integer cid,
+                          @RequestParam Integer tid) {
         try {
-            service.del(vo.getTid(), vo.getCid());
+            service.del(tid, cid);
         } catch (Exception e) {
             logger.error("Fail:", e);
             return ResultBean.errorMsg("删除失败：课程不存在，或者课程不是该教练所发布");

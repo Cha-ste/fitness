@@ -2,7 +2,8 @@
 SQLyog Enterprise v12.08 (64 bit)
 MySQL - 8.0.17 : Database - fitness
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -23,7 +24,6 @@ DROP TABLE IF EXISTS `apply`;
 CREATE TABLE `apply` (
   `cid` int(11) DEFAULT NULL COMMENT '课程id',
   `sid` int(11) DEFAULT NULL COMMENT '会员id',
-  `tid` int(11) DEFAULT NULL COMMENT '教练id',
   `ctime` datetime DEFAULT NULL COMMENT '上课时间',
   `setTime` varchar(1) DEFAULT NULL COMMENT '设置上课时间标志',
   `appointment` int(11) DEFAULT NULL COMMENT '预约课程标志',
@@ -35,7 +35,7 @@ CREATE TABLE `apply` (
 
 /*Data for the table `apply` */
 
-insert  into `apply`(`cid`,`sid`,`tid`,`ctime`,`setTime`,`appointment`,`appointok`,`clockin`,`prohibit`,`punch`) values (1,1,1,'2020-02-19 17:44:02','1',1,'1','0','0',12);
+insert  into `apply`(`cid`,`sid`,`ctime`,`setTime`,`appointment`,`appointok`,`clockin`,`prohibit`,`punch`) values (1,1,'2020-02-19 17:44:02','1',1,'1','0','0',12);
 
 /*Table structure for table `coach` */
 
