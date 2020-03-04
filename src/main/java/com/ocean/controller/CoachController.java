@@ -61,7 +61,7 @@ public class CoachController {
     @GetMapping(value = "/traineeList")
     @ApiOperation("获取已发布课程的报名会员列表")
     public ResultBean<List<User>> get(@RequestParam Integer tid,
-                                      @RequestParam Integer cid) {
+                                      @RequestParam(required = false) Integer cid) {
         try {
             List<User> memberList = service.getTraineeList(tid, cid);
             return ResultBean.success(memberList);
