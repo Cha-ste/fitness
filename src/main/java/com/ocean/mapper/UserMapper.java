@@ -14,7 +14,7 @@ public interface UserMapper {
 
     User getUser(Integer sid);
 
-    int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKey(User record);
 
     int getCount();
 

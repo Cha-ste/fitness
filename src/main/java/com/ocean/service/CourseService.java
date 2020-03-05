@@ -33,4 +33,6 @@ public interface CourseService {
     List<CommentVO> getCourseEvaluate(Integer cid);
 
     List<CourseVO> getCoachCourseList(Integer tid);
+
+    void countIncrease(Integer cid);
 }

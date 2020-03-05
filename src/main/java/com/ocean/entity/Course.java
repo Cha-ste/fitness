@@ -79,7 +79,7 @@ public class Course {
     }
 
     public Integer getCount() {
-        return count;
+        return count == null ? 0 : count;
     }
 
     public void setCount(Integer count) {

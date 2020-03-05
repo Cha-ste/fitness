@@ -116,4 +116,9 @@
   <select id="getCoachCourseList" parameterType="int" resultMap="BaseResultMap">
     select * from course where tid = #{tid}
   </select>
+  <update id="countIncrease" >
+    update course
+    set count = (select c.count from course where cid = #{cid}) + 1
+    where cid = #{cid}
+  </update>
 </mapper>

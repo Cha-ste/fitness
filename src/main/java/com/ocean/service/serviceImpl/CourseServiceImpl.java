@@ -110,4 +110,9 @@ public class CourseServiceImpl implements CourseService{
     public List<CourseVO> getCoachCourseList(Integer tid) {
         return mapper.getCoachCourseList(tid);
     }
+
+    @Override
+    public void countIncrease(Integer cid) {
+        mapper.countIncrease(cid);
+    }
 }

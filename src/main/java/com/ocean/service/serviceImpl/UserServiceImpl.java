@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void update(User model) {
-        int success = mapper.updateByPrimaryKeySelective(model);
+        int success = mapper.updateByPrimaryKey(model);
         if (success <= 0) {
             logger.error("[updateUser]update User={} fail",  model.toString());
             throw new RuntimeException("Modify data fail");

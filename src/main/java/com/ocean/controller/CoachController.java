@@ -113,9 +113,6 @@ public class CoachController {
         if (StringUtils.isEmpty(model.getCoachName())) {
             return ResultBean.errorMsg("教练名字不能为空");
         }
-        if (StringUtils.isEmpty(model.getPassword())) {
-            return ResultBean.errorMsg("教练密码不能为空");
-        }
         if (service.coachNameExist(model.getCoachName())) {
             return ResultBean.errorMsg("名字已存在");
         }

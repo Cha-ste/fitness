@@ -18,6 +18,15 @@
       #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{money,jdbcType=DECIMAL})
   </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ocean.entity.User">
+    update users
+    set username = #{username},
+        sex = #{sex},
+        phone = #{phone},
+        birthday = #{birthday},
+        money = #{money}
+    where sid = #{sid}
+  </update>
   <select id="selectAll" resultMap="BaseResultMap">
     select sid, username, password, sex, phone, birthday, money
     from users

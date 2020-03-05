@@ -61,4 +61,6 @@ public interface CourseMapper {
 
     int deleteCoachCourse(@Param("tid") Integer tid,
                           @Param("cid") Integer cid);
+
+    void countIncrease(Integer cid);
 }

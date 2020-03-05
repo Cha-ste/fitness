@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.ocean.entity.Apply;
 import com.ocean.service.ApplyService;
@@ -65,7 +66,7 @@ public class ApplyController {
 
     @PostMapping(value = "/apply")
     @ApiOperation("会员报名")
-    public ResultBean save(ApplyVO vo) {
+    public ResultBean save(@Validated ApplyVO vo) {
         try {
             Apply record = new Apply();
             record.setCid(vo.getCid());
