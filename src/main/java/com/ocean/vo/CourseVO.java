@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @ApiModel(value = "健身课程信息")
 public class CourseVO {
     private Integer cid;
+    private Integer tid;
     private String cname;
     private BigDecimal cost;
     private String coachName;

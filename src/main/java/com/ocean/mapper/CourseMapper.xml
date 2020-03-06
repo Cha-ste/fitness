@@ -60,8 +60,8 @@
           AND (coach.coach_name like concat('%', #{keyword}, '%')
           OR course.cname like concat('%', #{keyword}, '%'))
         </if>
-    ) AS c
-      LEFT JOIN apply a
+      ) AS c
+    LEFT JOIN apply a
         ON c.cid = a.cid
         AND a.sid = #{sid}
   </select>
