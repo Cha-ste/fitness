@@ -16,7 +16,7 @@
   </delete>
   <delete id="deleteCoachCourse" parameterType="java.lang.Integer">
     delete from course
-    where cid = #{cid,jdbcType=INTEGER} and tid = #{cid,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER} and tid = #{tid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ocean.entity.Course">
     insert into course (tid, cname,
