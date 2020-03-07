@@ -14,4 +14,6 @@ public class ApplyVO {
     private Integer sid;
     @NotNull(message = "punch 不能为空")
     private Integer punch;
+    @NotNull(message = "count 不能为空")
+    private Integer count;
 }

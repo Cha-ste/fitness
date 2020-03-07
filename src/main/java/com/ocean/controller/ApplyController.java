@@ -68,12 +68,7 @@ public class ApplyController {
     @ApiOperation("会员报名")
     public ResultBean save(@Validated ApplyVO vo) {
         try {
-            Apply record = new Apply();
-            record.setCid(vo.getCid());
-            record.setSid(vo.getSid());
-            record.setPunch(vo.getPunch());
-
-            service.save(record);
+            service.save(vo);
 
         } catch (Exception e) {
             logger.error("Fail:", e);

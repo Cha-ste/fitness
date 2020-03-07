@@ -6,6 +6,7 @@ import com.ocean.entity.Apply;
 import com.ocean.mapper.ApplyMapper;
 import com.ocean.mapper.CourseMapper;
 import com.ocean.service.ApplyService;
+import com.ocean.vo.ApplyVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,18 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     @Transactional
-    public void save(Apply model) {
-        int success = mapper.insert(model);
+    public void save(ApplyVO vo) {
+        Apply record = new Apply();
+        record.setTid(vo.getTid());
+        record.setCid(vo.getCid());
+        record.setSid(vo.getSid());
+        record.setPunch(vo.getPunch());
+
+        int success = mapper.insert(record);
         // 更新课程的报名人数
-        courseMapper.countIncrease(model.getCid());
+        courseMapper.countIncrease(vo.getCid(), vo.getCount() + 1);
         if (success <= 0) {
-            logger.error("[addApply]add Apply={} fail", model.toString());
+            logger.error("[addApply]add Apply={} fail", record.toString());
             throw new RuntimeException("Add data fail");
         }
         return;

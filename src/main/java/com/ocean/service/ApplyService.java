@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import com.ocean.entity.Apply;
 import com.github.pagehelper.PageInfo;
+import com.ocean.vo.ApplyVO;
 
 
 public interface ApplyService {
 
     Apply getApply(Integer id);
 
-    void save(Apply model);
+    void save(ApplyVO model);
 
     void update(Apply model);
 

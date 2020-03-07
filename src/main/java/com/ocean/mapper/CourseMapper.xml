@@ -20,10 +20,10 @@
   </delete>
   <insert id="insert" parameterType="com.ocean.entity.Course">
     insert into course (tid, cname,
-      cost, location, description, 
+      cost, location, description,
       count)
     values (#{tid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR},
-      #{cost,jdbcType=DECIMAL}, #{location,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{cost,jdbcType=DECIMAL}, #{location,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
       #{count,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.ocean.entity.Course">
@@ -118,7 +118,7 @@
   </select>
   <update id="countIncrease" >
     update course
-    set count = (select c.count from course where cid = #{cid}) + 1
+    set count = #{count}
     where cid = #{cid}
   </update>
 </mapper>

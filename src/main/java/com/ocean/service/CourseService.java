@@ -34,5 +34,5 @@ public interface CourseService {
 
     List<CourseVO> getCoachCourseList(Integer tid);
 
-    void countIncrease(Integer cid);
+    void countIncrease(Integer cid, Integer count);
 }

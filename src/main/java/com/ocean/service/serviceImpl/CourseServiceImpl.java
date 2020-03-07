@@ -112,7 +112,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void countIncrease(Integer cid) {
-        mapper.countIncrease(cid);
+    public void countIncrease(Integer cid, Integer count) {
+        mapper.countIncrease(cid, count);
     }
 }

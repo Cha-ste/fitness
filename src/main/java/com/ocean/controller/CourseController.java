@@ -33,7 +33,7 @@ public class CourseController {
             return ResultBean.success(entity);
         } catch (Exception e) {
             logger.error("Fail:", e);
-            return ResultBean.ERROR;
+            return ResultBean.errorMsg("数据不存在");
         }
     }
 
