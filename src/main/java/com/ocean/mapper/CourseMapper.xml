@@ -9,6 +9,7 @@
     <result column="location" jdbcType="VARCHAR" property="location" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="prohibit" jdbcType="INTEGER" property="prohibit" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from course
@@ -21,10 +22,10 @@
   <insert id="insert" parameterType="com.ocean.entity.Course">
     insert into course (tid, cname,
       cost, location, description,
-      count)
+      count, prohibit)
     values (#{tid,jdbcType=INTEGER}, #{cname,jdbcType=VARCHAR},
       #{cost,jdbcType=DECIMAL}, #{location,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
-      #{count,jdbcType=INTEGER})
+      #{count,jdbcType=INTEGER},#{prohibit,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.ocean.entity.Course">
     update course
@@ -33,16 +34,17 @@
       cost = #{cost,jdbcType=DECIMAL},
       location = #{location,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      count = #{count,jdbcType=INTEGER}
+      count = #{count,jdbcType=INTEGER},
+      prohibit = #{prohibit,jdbcType=INTEGER}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select cid, tid, cname, cost, location, description, count
+    select cid, tid, cname, cost, location, description, count, prohibit
     from course
     where cid = #{cid,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select cid, tid, cname, cost, location, description, count
+    select cid, tid, cname, cost, location, description, count, prohibit
     from course
   </select>
   <select id="getAllCourseList" parameterType="int" resultType="com.ocean.vo.CourseVO">

@@ -30,6 +30,8 @@ public class Course {
 
     private Integer count;
 
+    private Integer prohibit;
+
     public Integer getCid() {
         return cid;
     }

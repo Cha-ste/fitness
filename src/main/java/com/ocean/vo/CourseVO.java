@@ -19,4 +19,5 @@ public class CourseVO {
     private String count;
     @ApiModelProperty(value = "会员是否已经购买本课程")
     private Integer havePaid;
+    private Integer prohibit;
 }
