@@ -18,4 +18,5 @@ public class MemberCourseVO {
     private Boolean appointment;
     private Boolean appointok;
     private Boolean clockin;
+    private Integer punch;
 }
