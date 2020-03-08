@@ -87,4 +87,12 @@ public class Course {
     public void setCount(Integer count) {
         this.count = count;
     }
+
+    public Integer getProhibit() {
+        return prohibit;
+    }
+
+    public void setProhibit(Integer prohibit) {
+        this.prohibit = prohibit;
+    }
 }
