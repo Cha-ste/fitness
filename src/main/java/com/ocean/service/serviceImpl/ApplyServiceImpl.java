@@ -97,4 +97,11 @@ public class ApplyServiceImpl implements ApplyService {
         return mapper.queryCount(paramMap);
     }
 
+    @Override
+    public void changeTable(Apply apply) {
+        int success = mapper.changeTable(apply);
+        if (success == 0){
+            throw new RuntimeException("报名不存在");
+        }
+    }
 }

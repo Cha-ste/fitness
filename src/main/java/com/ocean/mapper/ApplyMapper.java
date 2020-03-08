@@ -26,4 +26,6 @@ public interface ApplyMapper {
     int queryCount(HashMap<String, Object> paramMap);
 
     int delete(@Param("cid") Integer cid, @Param("sid") Integer sid);
+
+    int changeTable(Apply apply);
 }

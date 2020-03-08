@@ -10,7 +10,6 @@
     <result column="appointment" jdbcType="INTEGER" property="appointment" />
     <result column="appointok" jdbcType="VARCHAR" property="appointok" />
     <result column="clockin" jdbcType="VARCHAR" property="clockin" />
-    <result column="prohibit" jdbcType="VARCHAR" property="prohibit" />
     <result column="punch" jdbcType="INTEGER" property="punch" />
   </resultMap>
   <insert id="insert" parameterType="com.ocean.entity.Apply">
@@ -20,16 +19,25 @@
       punch)
     values (#{cid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER},
       #{ctime,jdbcType=TIMESTAMP}, #{settime,jdbcType=VARCHAR}, #{appointment,jdbcType=INTEGER},
-      #{appointok,jdbcType=VARCHAR}, #{clockin,jdbcType=VARCHAR}, #{prohibit,jdbcType=VARCHAR},
-      #{punch,jdbcType=INTEGER})
+      #{appointok,jdbcType=VARCHAR}, #{clockin,jdbcType=VARCHAR}, #{punch,jdbcType=INTEGER})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
-    select cid, sid, tid, ctime, setTime, appointment, appointok, clockin, prohibit,
-    punch
+    select cid, sid, tid, ctime, setTime, appointment, appointok, clockin, punch
     from apply
   </select>
 
   <delete id="delete">
     delete from apply where cid = #{cid} and sid = #{sid}
   </delete>
+  <update id="changeTable" parameterType="com.ocean.entity.Apply">
+      update apply
+      set
+        ctime = #{ctime},
+        setTime = #{settime},
+        appointment = #{appointment},
+        appointok = #{appointok},
+        clockin = #{clockin},
+        punch = #{punch}
+      where cid = #{cid} and sid = #{sid} and tid = #{tid}
+  </update>
 </mapper>

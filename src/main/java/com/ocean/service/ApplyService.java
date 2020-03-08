@@ -22,4 +22,5 @@ public interface ApplyService {
     PageInfo<Apply> query(int currentPage, int itemsPerPage, HashMap<String, Object> paramMap);
     int queryCount(HashMap<String, Object> paramMap);
 
+    void changeTable(Apply apply);
 }

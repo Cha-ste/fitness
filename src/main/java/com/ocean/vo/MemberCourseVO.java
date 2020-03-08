@@ -19,4 +19,5 @@ public class MemberCourseVO {
     private Boolean appointok;
     private Boolean clockin;
     private Integer punch;
+    private Integer prohibit;
 }

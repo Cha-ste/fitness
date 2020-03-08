@@ -74,10 +74,23 @@ public class ApplyController {
             logger.error("Fail:", e);
             return ResultBean.ERROR;
         }
-        return ResultBean.success("保存成功");
+        return ResultBean.success("报名成功");
     }
 
-    @DeleteMapping(value = "/del")
+    @PostMapping(value = "/changeTable")
+    @ApiOperation("修改会员报名信息")
+    public ResultBean changeTable(@Validated Apply apply) {
+        try {
+            service.changeTable(apply);
+        } catch (Exception e) {
+            logger.error("Fail:", e);
+            return ResultBean.errorMsg("报名信息不存在，修改失败");
+        }
+        return ResultBean.success("修改成功");
+    }
+
+    @PostMapping(value = "/del")
+    @ApiOperation("删除报名记录")
     public ResultBean del(Integer cid, Integer sid) {
         try {
             service.del(cid, sid);

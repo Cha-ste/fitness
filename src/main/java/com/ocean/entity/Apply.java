@@ -25,8 +25,6 @@ public class Apply {
 
     private String clockin;
 
-    private String prohibit;
-
     private Integer punch;
 
     public Integer getCid() {
@@ -91,14 +89,6 @@ public class Apply {
 
     public void setClockin(String clockin) {
         this.clockin = clockin == null ? null : clockin.trim();
-    }
-
-    public String getProhibit() {
-        return prohibit;
-    }
-
-    public void setProhibit(String prohibit) {
-        this.prohibit = prohibit == null ? null : prohibit.trim();
     }
 
     public Integer getPunch() {

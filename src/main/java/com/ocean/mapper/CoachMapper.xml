@@ -58,6 +58,7 @@
       a.appointok,
       a.clockin,
       c.cname as title,
+      c.prohibit,
       a.punch
     from
       users u,
