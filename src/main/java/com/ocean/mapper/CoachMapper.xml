@@ -58,7 +58,7 @@
       a.appointok,
       a.clockin,
       c.cname as title,
-      c.punch
+      a.punch
     from
       users u,
       apply a,
