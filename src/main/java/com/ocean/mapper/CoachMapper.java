@@ -2,6 +2,7 @@ package com.ocean.mapper;
 
 import com.ocean.entity.Coach;
 import com.ocean.entity.User;
+import com.ocean.vo.MemberCourseVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public interface CoachMapper {
 
     Coach getCoach(Integer id);
 
-    List<User> getTraineeList(Integer tid, Integer cid);
+    List<MemberCourseVO> getTraineeList(Integer tid, Integer cid);
 
     int changePassword(@Param("tid") Integer tid,
                         @Param("newPassword") String newPassword);

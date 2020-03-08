@@ -2,6 +2,7 @@ package com.ocean.service.serviceImpl;
 
 import com.ocean.entity.User;
 import com.ocean.utils.MD5Util;
+import com.ocean.vo.MemberCourseVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class CoachServiceImpl implements CoachService{
     }
 
     @Override
-    public List<User> getTraineeList(Integer tid, Integer cid) {
+    public List<MemberCourseVO> getTraineeList(Integer tid, Integer cid) {
         return mapper.getTraineeList(tid, cid);
     }
 

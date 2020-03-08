@@ -5,6 +5,7 @@ import java.util.List;
 import com.ocean.entity.Coach;
 import com.github.pagehelper.PageInfo;
 import com.ocean.entity.User;
+import com.ocean.vo.MemberCourseVO;
 
 
 public interface CoachService {
@@ -37,7 +38,7 @@ public interface CoachService {
      * @param cid 课程id
      * @return 学员列表
      */
-    List<User> getTraineeList(Integer tid, Integer cid);
+    List<MemberCourseVO> getTraineeList(Integer tid, Integer cid);
 
     /**
      * 修改教练密码

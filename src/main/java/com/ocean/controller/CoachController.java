@@ -8,6 +8,7 @@ import com.ocean.utils.MD5Util;
 import com.ocean.utils.TokenUtils;
 import com.ocean.vo.CoachChangePasswordVo;
 import com.ocean.vo.CoachLoginVO;
+import com.ocean.vo.MemberCourseVO;
 import com.ocean.vo.ResultBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,10 +61,10 @@ public class CoachController {
 
     @GetMapping(value = "/traineeList")
     @ApiOperation("获取已发布课程的报名会员列表")
-    public ResultBean<List<User>> get(@RequestParam Integer tid,
-                                      @RequestParam(required = false) Integer cid) {
+    public ResultBean<List<MemberCourseVO>> get(@RequestParam Integer tid,
+                                                @RequestParam(required = false) Integer cid) {
         try {
-            List<User> memberList = service.getTraineeList(tid, cid);
+            List<MemberCourseVO> memberList = service.getTraineeList(tid, cid);
             return ResultBean.success(memberList);
         } catch (Exception e) {
             logger.error("Fail:", e);

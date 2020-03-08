@@ -57,7 +57,8 @@
       a.appointment,
       a.appointok,
       a.clockin,
-      c.cname as title
+      c.cname as title,
+      c.punch
     from
       users u,
       apply a,
