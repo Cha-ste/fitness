@@ -123,4 +123,9 @@
     set count = #{count}
     where cid = #{cid}
   </update>
+  <update id="banOrNot">
+    update course
+    set prohibit = #{prohibit}
+    where cid = #{cid}
+  </update>
 </mapper>

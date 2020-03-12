@@ -26,11 +26,11 @@ public class ApplyServiceImpl implements ApplyService {
     private CourseMapper courseMapper;
 
     @Override
-    public Apply getApply(Integer id) {
+    public Apply getApply(Integer cid, Integer sid) {
 
-        Apply model = mapper.selectByPrimaryKey(id);
+        Apply model = mapper.getApply(cid, sid);
         if (model == null) {
-            logger.error("[getApply]delete Apply id={} fail", id);
+            logger.error("[getApply]delete Apply cid={}, sid={} fail", cid, sid);
             throw new RuntimeException("GET data fail");
         }
         return model;
@@ -59,7 +59,7 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public void update(Apply model) {
-        int success = mapper.updateByPrimaryKeySelective(model);
+        int success = mapper.updateByPrimaryKey(model);
         if (success <= 0) {
             logger.error("[updateApply]update Apply={} fail", model.toString());
             throw new RuntimeException("Modify data fail");
@@ -85,16 +85,6 @@ public class ApplyServiceImpl implements ApplyService {
         PageHelper.startPage(pageNum, pageSize);
 
         return new PageInfo<>(mapper.query(paramMap));
-    }
-
-    @Override
-    public int getCount() {
-        return mapper.getCount();
-    }
-
-    @Override
-    public int queryCount(HashMap<String, Object> paramMap) {
-        return mapper.queryCount(paramMap);
     }
 
     @Override

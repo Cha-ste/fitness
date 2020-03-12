@@ -33,9 +33,9 @@ public class ApplyController {
 
     @GetMapping(value = "/get")
     @ApiOperation("获取报名信息")
-    public ResultBean<Apply> get(Integer id) {
+    public ResultBean<Apply> get(Integer cid, Integer sid) {
         try {
-            Apply entity=service.getApply(id);
+            Apply entity=service.getApply(cid, sid);
             return ResultBean.success(entity);
         } catch (Exception e) {
             logger.error("Fail:", e);

@@ -17,7 +17,7 @@ public class Apply {
 
     private Date ctime;
 
-    private String settime;
+    private String setTime;
 
     private Integer appointment;
 
@@ -59,12 +59,12 @@ public class Apply {
         this.ctime = ctime;
     }
 
-    public String getSettime() {
-        return settime;
+    public String getSetTime() {
+        return setTime;
     }
 
-    public void setSettime(String settime) {
-        this.settime = settime == null ? null : settime.trim();
+    public void setSetTime(String setTime) {
+        this.setTime = setTime == null ? null : setTime.trim();
     }
 
     public Integer getAppointment() {

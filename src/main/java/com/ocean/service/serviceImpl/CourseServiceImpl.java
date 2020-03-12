@@ -115,4 +115,12 @@ public class CourseServiceImpl implements CourseService{
     public void countIncrease(Integer cid, Integer count) {
         mapper.countIncrease(cid, count);
     }
+
+    @Override
+    public void banOrNot(Integer cid, Integer prohibit) {
+        int success = mapper.banOrNot(cid, prohibit);
+        if (success <= 0) {
+            throw new RuntimeException();
+        }
+    }
 }

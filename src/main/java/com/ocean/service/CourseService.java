@@ -35,4 +35,6 @@ public interface CourseService {
     List<CourseVO> getCoachCourseList(Integer tid);
 
     void countIncrease(Integer cid, Integer count);
+
+    void banOrNot(Integer cid, Integer prohibit);
 }

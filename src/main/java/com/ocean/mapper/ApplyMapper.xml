@@ -6,7 +6,7 @@
     <result column="sid" jdbcType="INTEGER" property="sid" />
     <result column="tid" jdbcType="INTEGER" property="tid" />
     <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
-    <result column="setTime" jdbcType="VARCHAR" property="settime" />
+    <result column="setTime" jdbcType="VARCHAR" property="setTime" />
     <result column="appointment" jdbcType="INTEGER" property="appointment" />
     <result column="appointok" jdbcType="VARCHAR" property="appointok" />
     <result column="clockin" jdbcType="VARCHAR" property="clockin" />
@@ -15,10 +15,9 @@
   <insert id="insert" parameterType="com.ocean.entity.Apply">
     insert into apply (cid, sid, tid,
       ctime, setTime, appointment,
-      appointok, clockin, prohibit,
-      punch)
+      appointok, clockin, punch)
     values (#{cid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER},
-      #{ctime,jdbcType=TIMESTAMP}, #{settime,jdbcType=VARCHAR}, #{appointment,jdbcType=INTEGER},
+      #{ctime,jdbcType=TIMESTAMP}, #{setTime,jdbcType=VARCHAR}, #{appointment,jdbcType=INTEGER},
       #{appointok,jdbcType=VARCHAR}, #{clockin,jdbcType=VARCHAR}, #{punch,jdbcType=INTEGER})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
@@ -33,11 +32,15 @@
       update apply
       set
         ctime = #{ctime},
-        setTime = #{settime},
+        setTime = #{setTime},
         appointment = #{appointment},
         appointok = #{appointok},
         clockin = #{clockin},
         punch = #{punch}
       where cid = #{cid} and sid = #{sid} and tid = #{tid}
   </update>
+  <select id="getApply" resultMap="BaseResultMap">
+    select * from apply
+    where cid = #{cid} and sid = #{sid}
+  </select>
 </mapper>

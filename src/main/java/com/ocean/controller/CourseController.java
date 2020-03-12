@@ -113,4 +113,15 @@ public class CourseController {
         return ResultBean.success("删除成功");
     }
 
+    @RequestMapping("/banOrNot")
+    public ResultBean<String> banOrNot(@RequestParam Integer cid, @RequestParam Integer prohibit) {
+
+        try {
+            service.banOrNot(cid, prohibit);
+        } catch (RuntimeException e) {
+            return ResultBean.errorMsg("课程不存在");
+        }
+        return ResultBean.success("成功");
+    }
+
 }

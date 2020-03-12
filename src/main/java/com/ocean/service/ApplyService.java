@@ -9,7 +9,7 @@ import com.ocean.vo.ApplyVO;
 
 public interface ApplyService {
 
-    Apply getApply(Integer id);
+    Apply getApply(Integer cid, Integer sid);
 
     void save(ApplyVO model);
 
@@ -17,10 +17,7 @@ public interface ApplyService {
 
     void del(Integer cid, Integer sid);
 
-    int getCount();
-
     PageInfo<Apply> query(int currentPage, int itemsPerPage, HashMap<String, Object> paramMap);
-    int queryCount(HashMap<String, Object> paramMap);
 
     void changeTable(Apply apply);
 }

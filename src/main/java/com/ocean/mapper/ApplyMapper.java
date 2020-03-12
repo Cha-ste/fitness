@@ -12,20 +12,13 @@ public interface ApplyMapper {
 
     int insert(Apply record);
 
-    int insertSelective(Apply record);
-
-    Apply selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Apply record);
-
     int updateByPrimaryKey(Apply record);
 
-    int getCount();
-
     List<Apply> query(HashMap<String, Object> paramMap);
-    int queryCount(HashMap<String, Object> paramMap);
 
     int delete(@Param("cid") Integer cid, @Param("sid") Integer sid);
 
     int changeTable(Apply apply);
+
+    Apply getApply(@Param("cid") Integer cid, @Param("sid") Integer sid);
 }

@@ -64,4 +64,7 @@ public interface CourseMapper {
 
     void countIncrease(@Param("cid") Integer cid,
                        @Param("count") Integer count);
+
+    int banOrNot(@Param("cid")Integer cid,
+                 @Param("prohibit")Integer prohibit);
 }
