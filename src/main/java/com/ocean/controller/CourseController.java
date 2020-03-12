@@ -114,6 +114,7 @@ public class CourseController {
     }
 
     @RequestMapping("/banOrNot")
+    @ApiOperation("更新课程启用状态")
     public ResultBean<String> banOrNot(@RequestParam Integer cid, @RequestParam Integer prohibit) {
 
         try {
