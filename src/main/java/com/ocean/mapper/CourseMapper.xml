@@ -87,7 +87,6 @@
           a.appointment,
           a.appointok,
           a.clockin,
-          a.prohibit,
           a.punch
         FROM
           course c,
