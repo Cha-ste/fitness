@@ -65,7 +65,9 @@
       ) AS c
     LEFT JOIN apply a
         ON c.cid = a.cid
-        AND a.sid = #{sid}
+        <if test="sid != null">
+          AND a.sid = #{sid}
+        </if>
   </select>
 
   <select id="getMemberCourseList" parameterType="int" resultType="com.ocean.vo.MyCourseVO">
