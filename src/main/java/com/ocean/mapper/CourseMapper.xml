@@ -129,4 +129,8 @@
     set prohibit = #{prohibit}
     where cid = #{cid}
   </update>
+  <update id="updateComment">
+    update comment set context = #{context}
+    where cid = #{cid} and sid = #{sid}
+  </update>
 </mapper>

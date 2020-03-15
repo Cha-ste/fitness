@@ -98,7 +98,10 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public void evaluate(Integer cid, Integer sid, String context) {
-        mapper.evaluate(cid, sid, context);
+        int success = mapper.updateComment(cid, sid, context);
+        if (success <= 0) {
+            mapper.evaluate(cid, sid, context);
+        }
     }
 
     @Override

@@ -67,4 +67,8 @@ public interface CourseMapper {
 
     int banOrNot(@Param("cid")Integer cid,
                  @Param("prohibit")Integer prohibit);
+
+    int updateComment(@Param("cid")Integer cid,
+                      @Param("sid")Integer sid,
+                      @Param("context")String context);
 }
