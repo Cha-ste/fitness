@@ -14,10 +14,10 @@ public class MemberCourseVO {
     private Integer cid;
     private String title;
     private Date ctime;
-    private Boolean setTime;
-    private Boolean appointment;
-    private Boolean appointok;
-    private Boolean clockin;
+    private Integer setTime;
+    private Integer appointment;
+    private String appointok;
+    private String clockin;
     private Integer punch;
-    private Integer prohibit;
+    private String prohibit;
 }
